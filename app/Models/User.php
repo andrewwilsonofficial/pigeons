@@ -45,4 +45,15 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function myLoft()
+    {
+        $log = MyLoftLog::where('user_id', $this->id)->latest()->first();
+
+        if ($log) {
+            return $log->location;
+        } else {
+            return null;
+        }
+    }
 }

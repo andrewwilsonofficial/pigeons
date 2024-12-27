@@ -54,17 +54,17 @@
                             <div class="dropdown d-flex profile-1">
                                 <a href="javascript:void(0)" data-bs-toggle="dropdown"
                                     class="nav-link leading-none d-flex">
-                                    <img src="{{ asset('assets/images/users/21.jpg') }}" alt="profile-user"
+                                    <img src="{{ asset('assets/images/avatar.svg') }}" alt="profile-user"
                                         class="avatar  profile-user brround cover-image">
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                     <div class="drop-heading">
                                         <div class="text-center">
                                             <h5 class="text-dark mb-0 fs-14 fw-semibold">
-                                                Khaled Sayfullah
+                                                {{ Auth::user()->name }}
                                             </h5>
                                             <small class="text-muted">
-                                                Premium Member
+                                                {{ Auth::user()->email }}
                                             </small>
                                         </div>
                                     </div>
@@ -73,10 +73,14 @@
                                         <i class="dropdown-icon fe fe-user"></i>
                                         Account
                                     </a>
-                                    <a class="dropdown-item" href="#!">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         <i class="dropdown-icon fe fe-alert-circle"></i>
                                         Sign out
                                     </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
                                 </div>
                             </div>
                         </div>

@@ -10,7 +10,7 @@ class Team extends Model
 {
     use HasFactory;
 
-    public $fillable = [
+    protected $fillable = [
         'name',
         'description',
         'pigeons',

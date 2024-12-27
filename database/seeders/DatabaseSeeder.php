@@ -16,8 +16,9 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Ibrahim Issa',
+            'email' => 'testing@pigeons.test',
+            'password' => bcrypt('password'),
         ]);
 
         // Run pigeon seeder
@@ -26,5 +27,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PairSeeder::class);
         $this->call(TeamSeeder::class);
         $this->call(RaceSeeder::class);
+        $this->call(StationSeeder::class);
     }
 }

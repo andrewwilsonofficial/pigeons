@@ -10,7 +10,7 @@ class Race extends Model
 {
     use HasFactory;
 
-    public $fillable = [
+    protected $fillable = [
         'name',
         'description',
         'type',
