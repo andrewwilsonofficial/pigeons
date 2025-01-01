@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('teams', function (Blueprint $table) {
+        Schema::create('medication_logs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
-            $table->string('name');
-            $table->string('description')->nullable();
+            $table->string('medication_name');
+            $table->string('dosage')->nullable();
+            $table->text('comments')->nullable();
+            $table->date('date')->nullable();
             $table->json('pigeons')->nullable();
             $table->timestamps();
         });
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('teams');
+        Schema::dropIfExists('medication_logs');
     }
 };

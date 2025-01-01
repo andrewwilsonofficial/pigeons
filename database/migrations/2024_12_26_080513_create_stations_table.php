@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('stations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->string('station_name');
             $table->string('location_name')->nullable();
             $table->string('location')->nullable();

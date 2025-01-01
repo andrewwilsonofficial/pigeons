@@ -12,6 +12,19 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    protected static function booted()
+    {
+        static::created(function ($user) {
+            SubscriptionLog::create([
+                'user_id' => $user->id,
+                'plan_id' => 1,
+                'price' => 0,
+                'start_date' => now(),
+                'end_date' => now()->addDays(3),
+            ]);
+        });
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +34,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -55,5 +69,17 @@ class User extends Authenticatable
         } else {
             return null;
         }
+    }
+
+    public function subscription()
+    {
+        return $this->hasOne(SubscriptionLog::class, 'user_id', 'id')
+                    ->where('end_date', '>', now())
+                    ->latest('end_date');
+    }
+
+    public function isSubscribed()
+    {
+        return $this->subscription()->exists();
     }
 }

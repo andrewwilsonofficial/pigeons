@@ -36,17 +36,24 @@
                             </button>
                             <div class="navbar navbar-collapse responsive-navbar p-0">
                                 <div class="collapse navbar-collapse bg-white px-0" id="navbarSupportedContent-4">
-                                    <!-- SEARCH -->
                                     <div class="header-nav-right p-5">
-                                        <a href="{{ route('register') }}"
-                                            class="btn ripple btn-min w-sm btn-outline-primary me-2 my-auto"
-                                            target="_blank">
-                                            {{ __('Register') }}
-                                        </a>
-                                        <a href="{{ route('login') }}"
-                                            class="btn ripple btn-min w-sm btn-primary me-2 my-auto" target="_blank">
-                                            {{ __('Login') }}
-                                        </a>
+                                        @guest
+                                            <a href="{{ route('register') }}"
+                                                class="btn ripple btn-min w-sm btn-outline-primary me-2 my-auto"
+                                                target="_blank">
+                                                {{ __('Register') }}
+                                            </a>
+                                            <a href="{{ route('login') }}"
+                                                class="btn ripple btn-min w-sm btn-primary me-2 my-auto" target="_blank">
+                                                {{ __('Login') }}
+                                            </a>
+                                        @else
+                                            <a href="{{ route('home') }}"
+                                                class="btn ripple btn-min w-sm btn-success me-2 my-auto" target="_blank">
+                                                {{ __('Dashboard') }}
+                                                <i class="fe fe-arrow-right-circle ms-2"></i>
+                                            </a>
+                                        @endguest
                                     </div>
                                 </div>
                             </div>
@@ -81,16 +88,26 @@
                                                     class="side-menu__label">Contact</span></a>
                                         </li>
                                     </ul>
-                                    <div class="header-nav-right d-lg-flex">
-                                        <a href="{{ route('register') }}"
-                                            class="btn ripple btn-min w-sm btn-outline-primary me-2 my-auto d-xl-block d-block">
-                                            {{ __('Register') }}
-                                        </a>
-                                        <a href="{{ route('login') }}"
-                                            class="btn ripple btn-min w-sm btn-primary me-2 my-auto d-xl-block d-block">
-                                            {{ __('Login') }}
-                                        </a>
-                                    </div>
+                                    @guest
+                                        <div class="header-nav-right d-lg-flex">
+                                            <a href="{{ route('register') }}"
+                                                class="btn ripple btn-min w-sm btn-outline-primary me-2 my-auto d-xl-block d-block">
+                                                {{ __('Register') }}
+                                            </a>
+                                            <a href="{{ route('login') }}"
+                                                class="btn ripple btn-min w-sm btn-primary me-2 my-auto d-xl-block d-block">
+                                                {{ __('Login') }}
+                                            </a>
+                                        </div>
+                                    @else
+                                        <div class="header-nav-right d-lg-flex">
+                                            <a href="{{ route('home') }}"
+                                                class="btn ripple btn-min w-sm btn-success me-2 my-auto d-xl-block d-block">
+                                                {{ __('Dashboard') }}
+                                                <i class="fe fe-arrow-right-circle ms-2"></i>
+                                            </a>
+                                        </div>
+                                    @endguest
                                 </div>
                             </div>
                         </div>
@@ -112,11 +129,19 @@
                                     dolores architecto quis blanditiis mollitia culpa asperiores autem.
                                 </h6>
 
-                                <a href="{{ route('register') }}" target="_blank"
-                                    class="btn ripple btn-min w-lg mb-3 me-2 btn-primary">
-                                    <i class="fe fe-user-plus me-2"></i>
-                                    Get Started
-                                </a>
+                                @guest
+                                    <a href="{{ route('register') }}" target="_blank"
+                                        class="btn ripple btn-min w-lg mb-3 me-2 btn-primary">
+                                        <i class="fe fe-user-plus me-2"></i>
+                                        Get Started
+                                    </a>
+                                @else
+                                    <a href="{{ route('home') }}" target="_blank"
+                                        class="btn ripple btn-min w-lg mb-3 me-2 btn-success">
+                                        <i class="fe fe-arrow-right-circle me-2"></i>
+                                        Dashboard
+                                    </a>
+                                @endguest
                             </div>
                             <div class="col-xl-6 col-lg-6 my-auto">
                                 <img src="{{ asset('assets/images/landing/3.png') }}" alt="">
