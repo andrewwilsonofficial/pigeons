@@ -10,14 +10,14 @@ class TeamController extends Controller
 {
     public function teams()
     {
-        $teams = Team::all();
+        $teams = Team::where('user_id', auth()->id())->get();
 
         return view('teams.index', compact('teams'));
     }
 
     public function createTeam()
     {
-        $pigeons = Pigeon::all();
+        $pigeons = Pigeon::where('user_id', auth()->id())->get();
 
         return view('teams.create', compact('pigeons'));
     }

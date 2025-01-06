@@ -9,5 +9,10 @@ class Station extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['station_name', 'location_name', 'location'];
+    protected $fillable = [
+        'user_id',
+        'station_name',
+        'location_name',
+        'location'
+    ];
 }

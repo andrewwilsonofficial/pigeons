@@ -17,6 +17,7 @@ class PigeonFactory extends Factory
     public function definition(): array
     {
         return [
+            'user_id' => 1,
             'name' => $this->faker->name,
             'band' => $this->faker->word,
             'second_band' => $this->faker->word,

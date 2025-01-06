@@ -10,7 +10,7 @@ class StationController extends Controller
 {
     public function stations()
     {
-        $stations = Station::all();
+        $stations = Station::where('user_id', auth()->id())->get();
 
         return view('stations.index', compact('stations'));
     }

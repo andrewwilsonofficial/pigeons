@@ -32,14 +32,41 @@
                                 @endforeach
                                 <div class="col-12">
                                     <div class="form-group">
+                                        <label for="medication_name">{{ __('Medication Name') }}</label>
+                                        <input type="text" class="form-control" id="medication_name" name="medication_name" placeholder="{{ __('Enter medication name') }}" value="{{ old('medication_name') }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="dosage">{{ __('Dosage') }}</label>
+                                        <input type="text" class="form-control" id="dosage" name="dosage" placeholder="{{ __('Enter dosage') }}" value="{{ old('dosage') }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
                                         <label for="date">{{ __('Date') }}</label>
                                         <input type="date" class="form-control" id="date" name="date" value="{{ old('date') }}">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="content">{{ __('Content') }}</label>
-                                        <input type="text" class="form-control" id="content" name="content" placeholder="{{ __('Enter content') }}" value="{{ old('content') }}">
+                                        <label for="comments">{{ __('Comments') }}</label>
+                                        <textarea class="form-control" id="comments" name="comments" rows="3" placeholder="{{ __('Enter comments') }}">{{ old('comments') }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="pigeons">{{ __('Pigeons') }}</label>
+                                        <select class="form-control select2" data-placeholder="{{ __('Choose pigeons') }}"
+                                            multiple id="pigeons" name="pigeons[]" required>
+                                            <option value="">{{ __('Select pigeons') }}</option>
+                                            @foreach ($pigeons as $pigeon)
+                                                <option value="{{ $pigeon->id }}"
+                                                    {{ old('pigeon') == $pigeon->id ? 'selected' : '' }}>
+                                                    {{ $pigeon->id }} - {{ $pigeon->band }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>

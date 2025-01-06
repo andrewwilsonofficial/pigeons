@@ -9,7 +9,7 @@ class SeasonController extends Controller
 {
     public function seasons()
     {
-        $seasons = Season::all();
+        $seasons = Season::where('user_id', auth()->id())->get();
 
         return view('seasons.index', compact('seasons'));
     }

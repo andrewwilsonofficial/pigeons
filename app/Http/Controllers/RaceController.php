@@ -9,7 +9,7 @@ class RaceController extends Controller
 {
     public function races()
     {
-        $races = Race::all();
+        $races = Race::where('user_id', auth()->id())->get();
 
         return view('races.index', compact('races'));
     }

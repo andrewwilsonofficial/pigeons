@@ -208,17 +208,17 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#!" class="slide-item">
+                                                <a href="{{ route('comments', 'pigeon') }}" class="slide-item">
                                                     {{ __('Pigeon comments') }}
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#!" class="slide-item">
+                                                <a href="{{ route('comments', 'pair') }}" class="slide-item">
                                                     {{ __('Pair comments') }}
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#!" class="slide-item">
+                                                <a href="{{ route('comments', 'team') }}" class="slide-item">
                                                     {{ __('Team comments') }}
                                                 </a>
                                             </li>

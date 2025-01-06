@@ -205,7 +205,8 @@
                                             {{ __('Comments') }}
                                         </h3>
                                         <div class="card-options">
-                                            <button class="btn btn-primary">
+                                            <button class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#addComment">
                                                 {{ __('Add comment') }}
                                                 <i class="fa fa-plus"></i>
                                             </button>
@@ -222,16 +223,15 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ([] as $comment)
+                                                    @foreach ($pigeon->comments as $comment)
                                                         <tr>
                                                             <td>{{ $comment->comment }}</td>
                                                             <td>{{ $comment->created_at }}</td>
                                                             <td>
-                                                                <a href="{{ route('comments.edit', $comment->id) }}"
-                                                                    class="btn btn-primary">
+                                                                <button class="btn btn-primary">
                                                                     {{ __('Edit') }}
                                                                     <i class="fa fa-edit"></i>
-                                                                </a>
+                                                                </button>
                                                                 <form
                                                                     action="{{ route('comments.destroy', $comment->id) }}"
                                                                     method="POST" style="display: inline-block">
@@ -360,7 +360,8 @@
                                                     </button>
                                                 </h2>
                                                 <div id="collapseFullSiblings" class="accordion-collapse collapse"
-                                                    aria-labelledby="headingFullSiblings" data-bs-parent="#accordionChildren">
+                                                    aria-labelledby="headingFullSiblings"
+                                                    data-bs-parent="#accordionChildren">
                                                     <div class="accordion-body">
                                                         {{ __('No data available ') }}
                                                     </div>
@@ -369,13 +370,15 @@
                                             <div class="accordion-item">
                                                 <h2 class="accordion-header" id="headingHalfSiblingsSire">
                                                     <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#collapseHalfSiblingsSire"
-                                                        aria-expanded="false" aria-controls="collapseHalfSiblingsSire">
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#collapseHalfSiblingsSire" aria-expanded="false"
+                                                        aria-controls="collapseHalfSiblingsSire">
                                                         {{ __('Half Siblings By Sire Only') }}
                                                     </button>
                                                 </h2>
                                                 <div id="collapseHalfSiblingsSire" class="accordion-collapse collapse"
-                                                    aria-labelledby="headingHalfSiblingsSire" data-bs-parent="#accordionChildren">
+                                                    aria-labelledby="headingHalfSiblingsSire"
+                                                    data-bs-parent="#accordionChildren">
                                                     <div class="accordion-body">
                                                         {{ __('No data available ') }}
                                                     </div>
@@ -384,13 +387,15 @@
                                             <div class="accordion-item">
                                                 <h2 class="accordion-header" id="headingHalfSiblingsDam">
                                                     <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#collapseHalfSiblingsDam"
-                                                        aria-expanded="false" aria-controls="collapseHalfSiblingsDam">
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#collapseHalfSiblingsDam" aria-expanded="false"
+                                                        aria-controls="collapseHalfSiblingsDam">
                                                         {{ __('Half Siblings By Dam Only') }}
                                                     </button>
                                                 </h2>
                                                 <div id="collapseHalfSiblingsDam" class="accordion-collapse collapse"
-                                                    aria-labelledby="headingHalfSiblingsDam" data-bs-parent="#accordionChildren">
+                                                    aria-labelledby="headingHalfSiblingsDam"
+                                                    data-bs-parent="#accordionChildren">
                                                     <div class="accordion-body">
                                                         {{ __('No data available ') }}
                                                     </div>
@@ -411,6 +416,34 @@
 @endsection
 
 @push('plugin-scripts')
+    <div class="modal fade" id="addComment" tabindex="-1" aria-labelledby="addCommentLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('comments.store', ['id' => $pigeon->id, 'type' => 'pigeon']) }}" method="POST">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addCommentLabel">{{ __('Add comment') }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="comment">{{ __('Comment') }}</label>
+                            <textarea class="form-control" id="comment" name="comment" rows="3"
+                                placeholder="{{ __('Enter comment') }}"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            {{ __('Close') }}
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            {{ __('Add comment') }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatable/js/dataTables.buttons.min.js') }}"></script>

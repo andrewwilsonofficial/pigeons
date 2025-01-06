@@ -11,14 +11,14 @@ class PairController extends Controller
 {
     public function pairs()
     {
-        $pairs = Pair::all();
+        $pairs = Pair::where('user_id', auth()->id())->get();
 
         return view('pairs.index', compact('pairs'));
     }
 
     public function createPair()
     {
-        $seasons = Season::all();
+        $seasons = Season::where('user_id', auth()->id())->get();
         $cocks = Pigeon::where('sex', 'cock')->get();
         $hens = Pigeon::where('sex', 'hen')->get();
 

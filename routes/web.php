@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JournalEntryController;
 use App\Http\Controllers\MedicationController;
@@ -96,6 +97,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/medication/{medication}/edit', [MedicationController::class, 'editMedication'])->name('medications.edit');
         Route::put('/medication/{medication}/edit', [MedicationController::class, 'updateMedication'])->name('medications.update');
         Route::delete('/medication/{medication}/delete', [MedicationController::class, 'destroyMedication'])->name('medications.destroy');
+
+        Route::get('/comments/{type}', [CommentController::class, 'comments'])->where('type', 'pigeon|pair|team')->name('comments');
+        Route::post('/comments/{type}/{id}', [CommentController::class, 'storeComment'])->where('type', 'pigeon|pair|team')->name('comments.store');
+        Route::delete('/comments/{comment}', [CommentController::class, 'destroyComment'])->name('comments.destroy');
     });
 });
 

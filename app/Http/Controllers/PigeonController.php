@@ -9,7 +9,7 @@ class PigeonController extends Controller
 {
     public function index()
     {
-        $pigeons = Pigeon::all();
+        $pigeons = Pigeon::where('user_id', auth()->id())->get();
 
         return view('pigeons.index', compact('pigeons'));
     }
@@ -62,7 +62,7 @@ class PigeonController extends Controller
 
     public function statistics()
     {
-        $pigeons = Pigeon::all();
+        $pigeons = Pigeon::where('user_id', auth()->id())->get();
 
         $totalPigeons = $pigeons->count();
 

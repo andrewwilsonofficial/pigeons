@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MedicationLog;
+use App\Models\Pigeon;
 use Illuminate\Http\Request;
 
 class MedicationController extends Controller
@@ -16,24 +17,29 @@ class MedicationController extends Controller
 
     public function createMedication()
     {
-        return view('medications.create');
+        $pigeons = Pigeon::where('user_id', auth()->id())->get();
+
+        return view('medications.create', compact('pigeons'));
     }
 
     public function storeMedication(Request $request)
     {
         $request->validate([
-            'medication' => 'required',
+            'medication_name' => 'required',
             'dosage' => 'required',
             'date' => 'required',
+            'pigeons' => 'required|array',
         ]);
 
         MedicationLog::create([
             'user_id' => auth()->id(),
-            'medication' => $request->medication,
+            'medication_name' => $request->medication_name,
             'dosage' => $request->dosage,
             'date' => $request->date,
+            'comments' => $request->comments,
+            'pigeons' => json_encode($request->pigeons),
         ]);
 
-        return redirect()->route('medications.index');
+        return redirect()->route('medications')->with('success', __('Medication log created successfully.'));
     }
 }

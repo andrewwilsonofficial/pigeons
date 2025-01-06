@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', __('Medications'))
+@section('title', __('Comments'))
 
 @section('content')
     <!-- CONTAINER -->
@@ -8,44 +8,32 @@
         <!-- PAGE-HEADER -->
         <div class="page-header">
             <h1 class="page-title">
-                {{ __('Medications') }}
+                {{ __('Comments') }}
             </h1>
         </div>
         <!-- PAGE-HEADER END -->
         <!-- Row -->
         <div class="row row-sm">
-            <div class="col-12 text-center mb-3">
-                <a href="{{ route('medications.create') }}" class="btn btn-primary">
-                    {{ __('Add a new medication') }}
-                    <i class="fa fa-plus"></i>
-                </a>
-            </div>
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">
-                            {{ __('Medications') }}
+                            {{ __('Comments') }}
                         </h3>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered text-nowrap border-bottom" id="medications-datatable">
+                            <table class="table table-bordered text-nowrap border-bottom" id="comments-datatable">
                                 <thead>
                                     <tr>
                                         <th class="wd-5p border-bottom-0">
                                             {{ __('Date') }}
                                         </th>
                                         <th class="wd-10p border-bottom-0">
-                                            {{ __('Name') }}
+                                            {{ __('Comment') }}
                                         </th>
                                         <th class="wd-10p border-bottom-0">
-                                            {{ __('Dosage') }}
-                                        </th>
-                                        <th class="wd-10p border-bottom-0">
-                                            {{ __('Applied to') }}
-                                        </th>
-                                        <th class="wd-10p border-bottom-0">
-                                            {{ __('Comments') }}
+                                            {{ __('About') }}
                                         </th>
                                         <th class="wd-5p border-bottom-0">
                                             {{ __('Actions') }}
@@ -53,32 +41,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($medication_logs as $medication_log)
+                                    @foreach ($comments as $comment)
                                         <tr>
                                             <td>
-                                                {{ $medication_log->date }}
+                                                {{ $comment->created_at->format('d-m-Y') }}
                                             </td>
                                             <td>
-                                                {{ $medication_log->medication_name }}
+                                                {{ $comment->comment }}
                                             </td>
                                             <td>
-                                                {{ $medication_log->dosage }}
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('pigeons.index') }}?medication_log_id={{ $medication_log->id }}">
-                                                    {{ $medication_log->pigeons()->count() }}
+                                                <a href="{{ $comment->commentable_link }}">
+                                                    {{ $comment->commenatble_name }}
                                                 </a>
                                             </td>
                                             <td>
-                                                {{ $medication_log->comments }}
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('medications.edit', $medication_log->id) }}"
-                                                    class="btn btn-sm btn-primary">
+                                                <button class="btn btn-sm btn-primary">
                                                     <i class="fa fa-edit"></i>
-                                                </a>
-                                                <form action="{{ route('medications.destroy', $medication_log->id) }}"
-                                                    method="POST" class="d-inline">
+                                                </button>
+                                                <form action="{{ route('comments.destroy', $comment->id) }}" method="POST"
+                                                    class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-danger">
@@ -117,7 +98,7 @@
     <script src="{{ asset('assets/js/table-data.js') }}"></script>
     <script>
         $(function() {
-            $('#medications-datatable').DataTable({
+            $('#comments-datatable').DataTable({
                 language: {
                     searchPlaceholder: 'Search...',
                     sSearch: '',

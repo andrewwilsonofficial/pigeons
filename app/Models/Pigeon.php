@@ -64,4 +64,10 @@ class Pigeon extends Model
             'band' => 'Unknown',
         ]);
     }
+
+    public function comments()
+    {
+        // Comment that has type of 'pigeon' and has type_id of this pigeon's id
+        return $this->hasMany(Comment::class, 'type_id')->where('type', 'pigeon');
+    }
 }
