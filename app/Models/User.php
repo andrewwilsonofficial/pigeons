@@ -60,17 +60,6 @@ class User extends Authenticatable
         ];
     }
 
-    public function myLoft()
-    {
-        $log = MyLoftLog::where('user_id', $this->id)->latest()->first();
-
-        if ($log) {
-            return $log->location;
-        } else {
-            return null;
-        }
-    }
-
     public function subscription()
     {
         return $this->hasOne(SubscriptionLog::class, 'user_id', 'id')
@@ -81,5 +70,19 @@ class User extends Authenticatable
     public function isSubscribed()
     {
         return $this->subscription()->exists();
+    }
+
+    public function getMyLoftAttribute()
+    {
+        $log = MyLoftLog::where('user_id', $this->id)->latest()->first();
+
+        if ($log) {
+            return [
+                'latitude' => explode(',', $log->location)[0],
+                'longitude' => explode(',', $log->location)[1],
+            ];
+        } else {
+            return null;
+        }
     }
 }

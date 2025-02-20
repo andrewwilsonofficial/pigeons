@@ -15,4 +15,19 @@ class Station extends Model
         'location_name',
         'location'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function getLongitudeAttribute()
+    {
+        return explode(',', $this->location)[0];
+    }
+
+    public function getLatitudeAttribute()
+    {
+        return explode(',', $this->location)[1];
+    }
 }

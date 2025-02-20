@@ -24,13 +24,39 @@ class StationController extends Controller
     {
         $validatedData = $request->validate([
             'station_name' => 'required',
-            'location_name' => 'nullable',
-            'location' => 'nullable',
+            'location_name' => 'required',
+            'location' => 'required',
         ]);
 
+        $validatedData['user_id'] = auth()->id();
         Station::create($validatedData);
 
         return redirect()->route('stations')->with('success', __('Station created successfully'));
+    }
+
+    public function editStation(Station $station)
+    {
+        return view('stations.edit', compact('station'));
+    }
+
+    public function updateStation(Request $request, Station $station)
+    {
+        $validatedData = $request->validate([
+            'station_name' => 'required',
+            'location_name' => 'required',
+            'location' => 'required',
+        ]);
+
+        $station->update($validatedData);
+
+        return redirect()->route('stations')->with('success', __('Station updated successfully'));
+    }
+
+    public function destroyStation(Station $station)
+    {
+        $station->delete();
+
+        return redirect()->route('stations')->with('success', __('Station deleted successfully'));
     }
 
     public function myLoft()
@@ -44,6 +70,7 @@ class StationController extends Controller
             'location' => 'required',
         ]);
 
+        $validatedData['user_id'] = auth()->id();
         MyLoftLog::create($validatedData);
 
         return redirect()->route('stations.myloft')->with('success', __('Location saved successfully'));

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PigeonAttachment extends Model
 {
-    protected $fillable = ['filename', 'original_filename'];
+    protected $fillable = ['pigeon_id', 'filename'];
 
     public function pigeon()
     {

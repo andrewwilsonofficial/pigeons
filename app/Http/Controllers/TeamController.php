@@ -30,7 +30,16 @@ class TeamController extends Controller
             'pigeons' => 'required|array',
         ]);
 
+        // Ensure all pigeons belong to the authenticated user
+        foreach ($validatedData['pigeons'] as $pigeonId) {
+            $pigeon = Pigeon::where('id', $pigeonId)->where('user_id', auth()->id())->first();
+            if (!$pigeon) {
+                return redirect()->route('teams.create')->with('error', __('Invalid pigeon selection'));
+            }
+        }
+
         $validatedData['pigeons'] = json_encode($validatedData['pigeons']);
+        $validatedData['user_id'] = auth()->id();
         $team = Team::create($validatedData);
 
         if (!$team) {
@@ -42,32 +51,46 @@ class TeamController extends Controller
 
     public function team(Team $team)
     {
+        if ($team->user_id !== auth()->id()) {
+            abort(403);
+        }
+
         return view('teams.view', compact('team'));
     }
 
-    public function editTeam($id)
+    public function editTeam(Team $team)
     {
-        $team = Team::findOrFail($id);
+        if ($team->user_id !== auth()->id()) {
+            abort(403);
+        }
 
-        return view('teams.edit', compact('team'));
+        $pigeons = Pigeon::where('user_id', auth()->id())->get();
+
+        return view('teams.edit', compact('team', 'pigeons'));
     }
 
-    public function updateTeam(Request $request, $id)
+    public function updateTeam(Team $team, Request $request)
     {
+        if ($team->user_id !== auth()->id()) {
+            abort(403);
+        }
+
         $validatedData = $request->validate([
             'name' => 'required',
             'description' => 'required',
         ]);
 
-        $team = Team::findOrFail($id);
         $team->update($validatedData);
 
         return redirect()->route('teams')->with('success', __('Team updated successfully'));
     }
 
-    public function deleteTeam($id)
+    public function destroyTeam(Team $team)
     {
-        $team = Team::findOrFail($id);
+        if ($team->user_id !== auth()->id()) {
+            abort(403);
+        }
+
         $team->delete();
 
         return redirect()->route('teams')->with('success', __('Team deleted successfully'));

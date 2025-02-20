@@ -81,11 +81,17 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
-                                                <img src="{{ asset('assets/images/' . $pigeon->cover) }}" alt="image"
-                                                    class="img-fluid">
+                                                <a href="{{ route('pigeons.view', ['pigeon' => $pigeon->id]) }}">
+                                                    <img src="{{ asset('assets/images/' . $pigeon->cover) }}"
+                                                        alt="image" class="img-fluid">
+                                                </a>
                                             </td>
                                             <td>{{ $pigeon->date_hatched }}</td>
-                                            <td>{{ $pigeon->name }}</td>
+                                            <td>
+                                                <a href="{{ route('pigeons.view', ['pigeon' => $pigeon->id]) }}">
+                                                    {{ $pigeon->name }}
+                                                </a>
+                                            </td>
                                             <td>
                                                 <a href="{{ route('pigeons.view', ['pigeon' => $pigeon->id]) }}">
                                                     {{ $pigeon->band }}

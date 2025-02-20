@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JournalEntryController;
 use App\Http\Controllers\MedicationController;
@@ -36,8 +37,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/view-pigeon/{pigeon}', [PigeonController::class, 'view'])->name('pigeons.view');
         Route::get('/create-pigeon', [PigeonController::class, 'create'])->name('pigeons.create');
         Route::post('/create-pigeon', [PigeonController::class, 'store'])->name('pigeons.store');
+        Route::get('/edit-pigeon/{pigeon}', [PigeonController::class, 'edit'])->name('pigeons.edit');
         Route::put('/update-pigeon/{pigeon}', [PigeonController::class, 'update'])->name('pigeons.update');
+        Route::get('/pigeon-attachments/{pigeon}', [PigeonController::class, 'attachments'])->name('pigeons.attachments');
+        Route::post('/pigeon-attachments/{pigeon}', [PigeonController::class, 'updateAttachments'])->name('pigeons.updateAttachments');
+        Route::delete('/delete-pigeon-attachment/{attachment}', [PigeonController::class, 'deleteAttachment'])->name('pigeons.deleteAttachment');
+        Route::get('/attachment-cover/{attachment}', [PigeonController::class, 'attachmentCover'])->name('pigeons.attachmentCover');
         Route::delete('/delete-pigeon/{pigeon}', [PigeonController::class, 'destroy'])->name('pigeons.destroy');
+        Route::get('/pedigree/{pigeon}', [PigeonController::class, 'pedigree'])->name('pigeons.pedigree');
 
         Route::get('/statistics', [PigeonController::class, 'statistics'])->name('pigeons.statistics');
         Route::get('/public-pigeons', [PigeonController::class, 'publicPigeons'])->name('pigeons.public');
@@ -100,7 +107,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::get('/comments/{type}', [CommentController::class, 'comments'])->where('type', 'pigeon|pair|team')->name('comments');
         Route::post('/comments/{type}/{id}', [CommentController::class, 'storeComment'])->where('type', 'pigeon|pair|team')->name('comments.store');
+        Route::put('/update-comment', [CommentController::class, 'updateComment'])->name('comments.update');
         Route::delete('/comments/{comment}', [CommentController::class, 'destroyComment'])->name('comments.destroy');
+
+        Route::get('/contacts', [ContactController::class, 'index'])->name('contacts');
+        Route::get('/contacts/create', [ContactController::class, 'create'])->name('contacts.create');
+        Route::post('/contacts/create', [ContactController::class, 'store'])->name('contacts.store');
+        Route::get('/contact/{contact}/edit', [ContactController::class, 'edit'])->name('contacts.edit');
+        Route::put('/contact/{contact}/edit', [ContactController::class, 'update'])->name('contacts.update');
+        Route::delete('/contacts/{contact}', [ContactController::class, 'destroy'])->name('contacts.destroy');
     });
 });
 

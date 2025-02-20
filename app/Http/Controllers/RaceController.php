@@ -23,9 +23,31 @@ class RaceController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required',
-            'description' => 'required',
+            'description' => 'nullable',
+            'type' => 'nullable|in:one-loft,futurity,club,combine,federation,training',
+            'date' => 'nullable|date',
+            'club_name' => 'nullable|string',
+            'club_number' => 'nullable|string',
+            'club_location' => 'nullable|string',
+            'combine_name' => 'nullable|string',
+            'release_point_name' => 'nullable|string',
+            'release_longitude' => 'nullable|string',
+            'release_latitude' => 'nullable|string',
+            'destination_point_name' => 'nullable|string',
+            'destination_longitude' => 'nullable|string',
+            'destination_latitude' => 'nullable|string',
+            'release_temperature' => 'nullable|string',
+            'release_weather' => 'nullable|string',
+            'release_notes' => 'nullable|string',
+            'destination_temperature' => 'nullable|string',
+            'destination_weather' => 'nullable|string',
+            'destination_notes' => 'nullable|string',
+            'total_birds' => 'nullable|string',
+            'total_lofts' => 'nullable|string',
+            'release_time' => 'nullable',
         ]);
 
+        $validatedData['user_id'] = auth()->id();
         $race = Race::create($validatedData);
 
         if (!$race) {
@@ -40,29 +62,46 @@ class RaceController extends Controller
         return view('races.view', compact('race'));
     }
 
-    public function editRace($id)
+    public function editRace(Race $race)
     {
-        $race = Race::findOrFail($id);
-
         return view('races.edit', compact('race'));
     }
 
-    public function updateRace(Request $request, $id)
+    public function updateRace(Race $race, Request $request)
     {
         $validatedData = $request->validate([
             'name' => 'required',
-            'description' => 'required',
+            'description' => 'nullable',
+            'type' => 'nullable|in:one-loft,futurity,club,combine,federation,training',
+            'date' => 'nullable|date',
+            'club_name' => 'nullable|string',
+            'club_number' => 'nullable|string',
+            'club_location' => 'nullable|string',
+            'combine_name' => 'nullable|string',
+            'release_point_name' => 'nullable|string',
+            'release_longitude' => 'nullable|string',
+            'release_latitude' => 'nullable|string',
+            'destination_point_name' => 'nullable|string',
+            'destination_longitude' => 'nullable|string',
+            'destination_latitude' => 'nullable|string',
+            'release_temperature' => 'nullable|string',
+            'release_weather' => 'nullable|string',
+            'release_notes' => 'nullable|string',
+            'destination_temperature' => 'nullable|string',
+            'destination_weather' => 'nullable|string',
+            'destination_notes' => 'nullable|string',
+            'total_birds' => 'nullable|string',
+            'total_lofts' => 'nullable|string',
+            'release_time' => 'nullable',
         ]);
 
-        $race = Race::findOrFail($id);
         $race->update($validatedData);
 
         return redirect()->route('races')->with('success', __('Race updated successfully'));
     }
 
-    public function deleteRace($id)
+    public function destroyRace(Race $race)
     {
-        $race = Race::findOrFail($id);
         $race->delete();
 
         return redirect()->route('races')->with('success', __('Race deleted successfully'));

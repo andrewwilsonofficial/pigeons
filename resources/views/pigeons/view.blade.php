@@ -4,7 +4,6 @@
 @section('content')
     <!-- CONTAINER -->
     <div class="main-container container-fluid">
-
         <!-- PAGE-HEADER -->
         <div class="page-header">
             <h1 class="page-title">
@@ -24,18 +23,27 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 text-center">
-                                <button class="btn btn-info">
+                                <a href="{{ route('pigeons.attachments', $pigeon->id) }}" class="btn btn-info">
                                     {{ __('Videos & images') }}
                                     <i class="fa fa-image"></i>
-                                </button>
-                                <button class="btn btn-primary">
+                                </a>
+                                <a href="{{ route('pigeons.pedigree', $pigeon->id) }}" class="btn btn-primary">
                                     {{ __('Pedigree') }}
                                     <i class="fa fa-tree"></i>
-                                </button>
-                                <button class="btn btn-danger">
-                                    {{ __('Delete') }}
-                                    <i class="fa fa-trash"></i>
-                                </button>
+                                </a>
+                                <form action="{{ route('pigeons.destroy', $pigeon->id) }}" method="POST"
+                                    style="display: inline-block">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger">
+                                        {{ __('Delete') }}
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
+                                <a href="{{ route('pigeons.edit', $pigeon->id) }}" class="btn btn-primary">
+                                    {{ __('Edit pigeon') }}
+                                    <i class="fa fa-edit"></i>
+                                </a>
                             </div>
                             <div class="col-12">
                                 <hr>
@@ -101,12 +109,6 @@
                                 <h2>
                                     {{ __('Information') }}
                                 </h2>
-                            </div>
-                            <div class="col-12 text-center">
-                                <button class="btn btn-primary">
-                                    {{ __('Edit pigeon') }}
-                                    <i class="fa fa-edit"></i>
-                                </button>
                             </div>
                             <div class="col-md-6">
                                 <div class="card">
@@ -228,10 +230,11 @@
                                                             <td>{{ $comment->comment }}</td>
                                                             <td>{{ $comment->created_at }}</td>
                                                             <td>
-                                                                <button class="btn btn-primary">
+                                                                <a href="{{ route('pigeons.edit', $pigeon->id) }}"
+                                                                    class="btn btn-primary">
                                                                     {{ __('Edit') }}
                                                                     <i class="fa fa-edit"></i>
-                                                                </button>
+                                                                </a>
                                                                 <form
                                                                     action="{{ route('comments.destroy', $comment->id) }}"
                                                                     method="POST" style="display: inline-block">

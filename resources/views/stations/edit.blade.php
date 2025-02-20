@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', __('My loft'))
+@section('title', __('Edit station'))
 
 @section('content')
     <!-- CONTAINER -->
@@ -8,7 +8,7 @@
         <!-- PAGE-HEADER -->
         <div class="page-header">
             <h1 class="page-title">
-                {{ __('My loft') }}
+                {{ __('Edit station') }}
             </h1>
         </div>
         <!-- PAGE-HEADER END -->
@@ -18,12 +18,14 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">
-                            {{ __('My loft') }}
+                            {{ __('Edit station') }}
                         </h3>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('stations.storeMyLoft') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('stations.update', $station->id) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
                             <div class="row">
                                 @foreach ($errors->all() as $error)
                                     <div class="col-12 mb-1">
@@ -31,13 +33,31 @@
                                     </div>
                                 @endforeach
                                 <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="station_name">{{ __('Name') }}</label>
+                                        <input type="text" class="form-control" id="station_name" name="station_name"
+                                            placeholder="{{ __('Enter name') }}"
+                                            value="{{ old('station_name', $station->station_name) }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="location_name">{{ __('Location name') }}</label>
+                                        <input type="text" class="form-control" id="location_name" name="location_name"
+                                            placeholder="{{ __('Enter location name') }}"
+                                            value="{{ old('location_name', $station->location_name) }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-12">
                                     <div id="map" style="width: 100%;height: 400px;"></div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="coordinate">{{ __('Coordinate') }}</label>
                                         <input type="text" class="form-control" id="location" name="location"
-                                            placeholder="{{ __('Enter coordinate') }}" value="{{ old('coordinate', Auth::user()->myLoft ? Auth::user()->myLoft['latitude'] . ',' . Auth::user()->myLoft['longitude'] : '') }}" required>
+                                            placeholder="{{ __('Enter coordinate') }}"
+                                            value="{{ old('location', $station->latitude . ',' . $station->longitude) }}"
+                                            readonly required>
                                     </div>
                                 </div>
                             </div>
@@ -60,15 +80,12 @@
         href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css">
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
     <script>
-        mapboxgl.accessToken = 'pk.eyJ1IjoiaWJyYWhpbXBocCIsImEiOiJja200dTRiZTQwODMzMnBxbDNvYWxvaWE0In0.8bVNmZQhKtQlPLDtKna_9A';
-        var defaultCoordinates = [ -74.0059728000, 40.7127753000 ]; // default coordinates [lng, lat]
-        var userCoordinates = @json(Auth::user()->myLoft ? [Auth::user()->myLoft['longitude'],Auth::user()->myLoft['latitude']] : null);
-        var initialCoordinates = userCoordinates || defaultCoordinates;
-
+        mapboxgl.accessToken =
+            'pk.eyJ1IjoiaWJyYWhpbXBocCIsImEiOiJja200dTRiZTQwODMzMnBxbDNvYWxvaWE0In0.8bVNmZQhKtQlPLDtKna_9A';
         var map = new mapboxgl.Map({
             container: 'map', // container id
             style: 'mapbox://styles/mapbox/streets-v11',
-            center: initialCoordinates, // starting position [lng, lat]
+            center: [{{ $station->latitude . ',' . $station->longitude }}], // starting position [lng, lat]
             zoom: 9 // starting zoom
         });
 
@@ -83,12 +100,9 @@
             geocoder
         );
 
-        let marker = null;
-        if (userCoordinates) {
-            marker = new mapboxgl.Marker()
-                .setLngLat(userCoordinates)
-                .addTo(map);
-        }
+        let marker = new mapboxgl.Marker()
+            .setLngLat([{{ $station->latitude . ',' . $station->longitude }}])
+            .addTo(map);
 
         map.on('click', function(e) {
             mapClickFn(e.lngLat);
@@ -98,7 +112,7 @@
                     .setLngLat(e.lngLat)
                     .addTo(map);
             } else {
-                marker.setLngLat(e.lngLat);
+                marker.setLngLat(e.lngLat)
             }
         });
 
@@ -109,7 +123,7 @@
                 "," +
                 coordinates.lat +
                 ".json?access_token=" +
-                mapboxgl.accessToken;
+                mapboxgl.accessToken
 
             document.getElementById("location").value = coordinates.lat + ',' + coordinates.lng;
         }

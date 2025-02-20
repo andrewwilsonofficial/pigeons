@@ -3,6 +3,7 @@
 
 <head>
     @include('layouts.head')
+    @stack('plugin-styles')
 </head>
 
 <body class="app sidebar-mini ltr light-mode">

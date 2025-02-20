@@ -25,4 +25,21 @@ class CommentController extends Controller
 
         return back()->with('success', __('Comment added successfully'));
     }
+
+    public function destroyComment($id)
+    {
+        $comment = Comment::find($id);
+        $comment->delete();
+
+        return back()->with('success', __('Comment deleted successfully'));
+    }
+
+    public function updateComment(Request $request)
+    {
+        $comment = Comment::find($request->id);
+        $comment->comment = $request->comment;
+        $comment->save();
+
+        return back()->with('success', __('Comment updated successfully'));
+    }
 }

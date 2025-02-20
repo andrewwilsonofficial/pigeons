@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pigeon;
+use App\Models\PigeonAttachment;
 use Illuminate\Http\Request;
 
 class PigeonController extends Controller
@@ -21,7 +22,10 @@ class PigeonController extends Controller
 
     public function create()
     {
-        return view('pigeons.create');
+        $sires = Pigeon::where('user_id', auth()->id())->where('sex', 'cock')->get();
+        $dams = Pigeon::where('user_id', auth()->id())->where('sex', 'hen')->get();
+
+        return view('pigeons.create', compact('sires', 'dams'));
     }
 
     public function store(Request $request)
@@ -35,7 +39,7 @@ class PigeonController extends Controller
             'family' => 'nullable|string|max:255',
             'last_owner' => 'nullable|string|max:255',
             'rating' => 'nullable|integer|min:0|max:100',
-            'color' => "#" . 'nullable|string|max:255',
+            'color' => 'nullable|string|max:255',
             'eye' => 'nullable|string|max:255',
             'leg' => 'nullable|string|max:255',
             'markings' => 'nullable|string|max:255',
@@ -53,11 +57,64 @@ class PigeonController extends Controller
         }
     }
 
+    public function edit(Pigeon $pigeon)
+    {
+        $sires = Pigeon::where('user_id', auth()->id())->where('sex', 'cock')->get();
+        $dams = Pigeon::where('user_id', auth()->id())->where('sex', 'hen')->get();
+
+        return view('pigeons.edit', compact('pigeon', 'sires', 'dams'));
+    }
+
     public function update(Request $request, Pigeon $pigeon)
     {
         $pigeon->update($request->except(['_token', '_method']));
 
         return redirect()->back()->with('success', 'Pigeon updated successfully');
+    }
+
+    public function attachments(Pigeon $pigeon)
+    {
+        $attachments = PigeonAttachment::where('pigeon_id', $pigeon->id)->get();
+
+        return view('pigeons.attachments', compact('attachments', 'pigeon'));
+    }
+
+    public function updateAttachments(Request $request, Pigeon $pigeon)
+    {
+        $validatedData = $request->validate([
+            'files' => 'required|file|mimes:jpg,jpeg,png,mp4,mov|max:73400320',
+        ]);
+
+        try {
+            $file = $validatedData['files'];
+            $file_uplaod = $file->store('attachments', 'main');
+
+            $attachment = PigeonAttachment::create([
+                'pigeon_id' => $pigeon->id,
+                'filename' => str_replace('attachments/', '', $file_uplaod),
+            ]);
+
+            return json_encode(['success' => true, 'element' => view('components.pigeons.attachment', ['attachment' => $attachment])->render()]);
+        } catch (\Exception $e) {
+            return json_encode(['success' => false, 'error' => $e->getMessage()]);
+        }
+    }
+
+    public function deleteAttachment(PigeonAttachment $attachment)
+    {
+        $attachment->delete();
+
+        return redirect()->back()->with('success', __('Attachment deleted successfully'));
+    }
+
+    public function attachmentCover(PigeonAttachment $attachment)
+    {
+        $extension = pathinfo($attachment->filename, PATHINFO_EXTENSION);
+        if ($extension == 'jpg' || $extension == 'jpeg' || $extension == 'png') {
+            return response()->file(public_path('attachments/' . $attachment->filename));
+        } else {
+            return response()->file(public_path('assets/images/video-thumbnail.webp'));
+        }
     }
 
     public function statistics()
@@ -114,5 +171,17 @@ class PigeonController extends Controller
         $pigeons = Pigeon::where('is_public', true)->get();
 
         return view('pigeons.public', compact('pigeons'));
+    }
+
+    public function destroy(Pigeon $pigeon)
+    {
+        $pigeon->delete();
+
+        return redirect()->route('pigeons.index')->with('success', __('Pigeon deleted successfully'));
+    }
+
+    public function pedigree(Pigeon $pigeon)
+    {
+        return view('pigeons.pedigree', compact('pigeon'));
     }
 }

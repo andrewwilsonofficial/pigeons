@@ -1,0 +1,109 @@
+.pedigree-container {
+    padding: 2rem;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.pedigree-tree {
+    position: relative;
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.pedigree-generation {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    position: relative;
+}
+
+.pedigree-generation::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 4rem;
+    background: rgba(22, 20, 20, 0.5);
+}
+
+.pedigree-g3 {
+    gap: 1rem;
+}
+
+.pedigree-g3 .pedigree-spacer {
+    width: 4rem;
+}
+
+.pedigree-g3::after {
+    display: none;
+}
+
+.pedigree-member {
+    text-align: center;
+    position: relative;
+}
+
+.pedigree-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: default;
+    min-width: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    color: #1a1a1a;
+}
+
+.pedigree-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.pedigree-main-person {
+    background: rgba(59, 130, 246, 0.9);
+    color: white;
+}
+
+.pedigree-profile-pic {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.pedigree-name {
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .pedigree-generation {
+        gap: 1rem;
+    }
+
+    .pedigree-card {
+        padding: 1rem;
+        font-size: 0.875rem;
+        min-width: 120px;
+    }
+
+    .pedigree-profile-pic {
+        width: 60px;
+        height: 60px;
+    }
+
+    .pedigree-g3 .pedigree-spacer {
+        width: 2rem;
+    }
+}

@@ -54,6 +54,7 @@ class Pigeon extends Model
         return $this->belongsTo(Pigeon::class, 'sire_id')->withDefault([
             'name' => 'Unknown',
             'band' => 'Unknown',
+            'cover' => 'map-pigeon.png',
         ]);
     }
 
@@ -62,12 +63,12 @@ class Pigeon extends Model
         return $this->belongsTo(Pigeon::class, 'dam_id')->withDefault([
             'name' => 'Unknown',
             'band' => 'Unknown',
+            'cover' => 'map-pigeon.png',
         ]);
     }
 
     public function comments()
     {
-        // Comment that has type of 'pigeon' and has type_id of this pigeon's id
         return $this->hasMany(Comment::class, 'type_id')->where('type', 'pigeon');
     }
 }

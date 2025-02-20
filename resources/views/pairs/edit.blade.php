@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', __('Add a new pair'))
+@section('title', __('Edit pair'))
 
 @section('content')
     <!-- CONTAINER -->
@@ -8,7 +8,7 @@
         <!-- PAGE-HEADER -->
         <div class="page-header">
             <h1 class="page-title">
-                {{ __('Add a new pair') }}
+                {{ __('Edit pair') }}
             </h1>
         </div>
         <!-- PAGE-HEADER END -->
@@ -18,12 +18,13 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">
-                            {{ __('Add a new pair') }}
+                            {{ __('Edit pair') }}
                         </h3>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('pairs.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('pairs.update', $pair->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
                             <div class="row">
                                 @foreach ($errors->all() as $error)
                                     <div class="col-12 mb-1">
@@ -34,25 +35,25 @@
                                     <div class="form-group">
                                         <label for="name">{{ __('Name') }}</label>
                                         <input type="text" class="form-control" id="name" name="name"
-                                            placeholder="{{ __('Enter name') }}" value="{{ old('name') }}" required>
+                                            placeholder="{{ __('Enter name') }}" value="{{ old('name', $pair->name) }}" required>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="description">{{ __('Description') }}</label>
-                                        <textarea class="form-control" id="description" name="description" placeholder="{{ __('Enter description') }}">{{ old('description') }}</textarea>
+                                        <textarea class="form-control" id="description" name="description" placeholder="{{ __('Enter description') }}">{{ old('description', $pair->description) }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="date_paired">{{ __('Date paired') }}</label>
-                                        <input type="date" class="form-control" id="date_paired" name="date_paired" value="{{ old('date_paired') }}" required>
+                                        <input type="date" class="form-control" id="date_paired" name="date_paired" value="{{ old('date_paired', $pair->date_paired) }}" required>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="date_paired">{{ __('Date separated') }}</label>
-                                        <input type="date" class="form-control" id="date_separated" name="date_separated" value="{{ old('date_separated') }}">
+                                        <label for="date_separated">{{ __('Date separated') }}</label>
+                                        <input type="date" class="form-control" id="date_separated" name="date_separated" value="{{ old('date_separated', $pair->date_separated) }}">
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -61,7 +62,7 @@
                                         <select class="form-control" id="season" name="season_id">
                                             <option value="">{{ __('Select season') }}</option>
                                             @foreach($seasons as $season)
-                                                <option value="{{ $season->id }}" {{ old('season') == $season->id ? 'selected' : '' }}>{{ $season->name }}</option>
+                                                <option value="{{ $season->id }}" {{ old('season_id', $pair->season_id) == $season->id ? 'selected' : '' }}>{{ $season->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -72,7 +73,7 @@
                                         <select class="form-control" id="cock" name="cock_id" required>
                                             <option value="">{{ __('Select cock') }}</option>
                                             @foreach($cocks as $cock)
-                                                <option value="{{ $cock->id }}" {{ old('cock') == $cock->id ? 'selected' : '' }}>{{ $cock->band }}</option>
+                                                <option value="{{ $cock->id }}" {{ old('cock_id', $pair->cock_id) == $cock->id ? 'selected' : '' }}>{{ $cock->band }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -83,7 +84,7 @@
                                         <select class="form-control" id="hen" name="hen_id" required>
                                             <option value="">{{ __('Select hen') }}</option>
                                             @foreach($hens as $hen)
-                                                <option value="{{ $hen->id }}" {{ old('hen') == $hen->id ? 'selected' : '' }}>{{ $hen->band }}</option>
+                                                <option value="{{ $hen->id }}" {{ old('hen_id', $pair->hen_id) == $hen->id ? 'selected' : '' }}>{{ $hen->band }}</option>
                                             @endforeach
                                         </select>
                                     </div>

@@ -30,11 +30,6 @@
                         </span>
                     </a>
                 </li>
-                <li class="sub-category">
-                    <h3>
-                        --
-                    </h3>
-                </li>
                 <li class="slide {{ request()->routeIs('pigeons.*') ? 'is-expanded' : '' }}">
                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
                         <i class="side-menu__icon fe fe-package"></i>
@@ -231,7 +226,7 @@
                 </li>
                 <li class="slide">
                     <a class="side-menu__item has-link {{ request()->routeIs('contacts') ? 'active' : '' }}"
-                        data-bs-toggle="slide" href="#!">
+                        data-bs-toggle="slide" href="{{ route('contacts') }}">
                         <i class="side-menu__icon fe fe-phone"></i>
                         <span class="side-menu__label">
                             {{ __('Contacts') }}

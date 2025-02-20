@@ -36,6 +36,8 @@ class PairController extends Controller
             'season_id' => 'nullable'
         ]);
 
+        $validatedData['user_id'] = auth()->id();
+
         $pair = Pair::create($validatedData);
 
         if (!$pair) {
@@ -50,15 +52,25 @@ class PairController extends Controller
         return view('pairs.view', compact('pair'));
     }
 
-    public function editPair($id)
+    public function editPair(Pair $pair)
     {
-        $pair = Pair::findOrFail($id);
+        if ($pair->user_id !== auth()->id()) {
+            return redirect()->route('pairs')->with('error', __('Unauthorized access'));
+        }
 
-        return view('pairs.edit', compact('pair'));
+        $seasons = Season::where('user_id', auth()->id())->get();
+        $cocks = Pigeon::where('sex', 'cock')->get();
+        $hens = Pigeon::where('sex', 'hen')->get();
+
+        return view('pairs.edit', compact('pair', 'seasons', 'cocks', 'hens'));
     }
 
-    public function updatePair(Request $request, $id)
+    public function updatePair(Pair $pair, Request $request)
     {
+        if ($pair->user_id !== auth()->id()) {
+            return redirect()->route('pairs')->with('error', __('Unauthorized access'));
+        }
+
         $validatedData = $request->validate([
             'name' => 'required',
             'description' => 'required',
@@ -68,15 +80,17 @@ class PairController extends Controller
             'season_id' => 'nullable'
         ]);
 
-        $pair = Pair::findOrFail($id);
         $pair->update($validatedData);
 
         return redirect()->route('pairs')->with('success', __('Pair updated successfully'));
     }
 
-    public function deletePair($id)
+    public function destroyPair(Pair $pair)
     {
-        $pair = Pair::findOrFail($id);
+        if ($pair->user_id !== auth()->id()) {
+            return redirect()->route('pairs')->with('error', __('Unauthorized access'));
+        }
+
         $pair->delete();
 
         return redirect()->route('pairs')->with('success', __('Pair deleted successfully'));

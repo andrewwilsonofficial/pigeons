@@ -24,15 +24,22 @@ class SeasonController extends Controller
         $validatedData = $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
+            'start_date' => 'nullable',
+            'end_date' => 'nullable',
             'current_season' => 'nullable',
         ]);
+
+        if ($request->has('current_season')) {
+            $validatedData['current_season'] = true;
+        }
+
+        $validatedData['user_id'] = auth()->id();
 
         try {
             Season::create($validatedData);
             return redirect()->route('seasons')->with('success', __('Season created successfully'));
         } catch (\Exception $e) {
+            dd($e);
             return redirect()->route('seasons.create')->with('error', __('Failed to create season'));
         }
     }

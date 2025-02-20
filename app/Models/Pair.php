@@ -11,6 +11,7 @@ class Pair extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'season_id',
         'cock_id',
         'hen_id',

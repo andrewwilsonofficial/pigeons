@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', __('Comments'))
+@section('title', __('Contacts'))
 
 @section('content')
     <!-- CONTAINER -->
@@ -8,32 +8,44 @@
         <!-- PAGE-HEADER -->
         <div class="page-header">
             <h1 class="page-title">
-                {{ __('Comments') }}
+                {{ __('Contacts') }}
             </h1>
         </div>
         <!-- PAGE-HEADER END -->
         <!-- Row -->
         <div class="row row-sm">
+            <div class="col-12 text-center mb-3">
+                <a href="{{ route('contacts.create') }}" class="btn btn-primary">
+                    {{ __('Add Contact') }}
+                    <i class="fa fa-plus"></i>
+                </a>
+            </div>
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">
-                            {{ __('Comments') }}
+                            {{ __('Contacts') }}
                         </h3>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered text-nowrap border-bottom" id="comments-datatable">
+                            <table class="table table-bordered text-nowrap border-bottom" id="contacts-datatable">
                                 <thead>
                                     <tr>
                                         <th class="wd-5p border-bottom-0">
-                                            {{ __('Date') }}
+                                            {{ __('Name') }}
                                         </th>
                                         <th class="wd-10p border-bottom-0">
-                                            {{ __('Comment') }}
+                                            {{ __('Email') }}
                                         </th>
                                         <th class="wd-10p border-bottom-0">
-                                            {{ __('About') }}
+                                            {{ __('Phone') }}
+                                        </th>
+                                        <th class="wd-10p border-bottom-0">
+                                            {{ __('Address') }}
+                                        </th>
+                                        <th class="wd-10p border-bottom-0">
+                                            {{ __('Website') }}
                                         </th>
                                         <th class="wd-5p border-bottom-0">
                                             {{ __('Actions') }}
@@ -41,26 +53,29 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($comments as $comment)
+                                    @foreach ($contacts as $contact)
                                         <tr>
                                             <td>
-                                                {{ $comment->created_at->format('d-m-Y') }}
+                                                {{ $contact->full_name }}
                                             </td>
                                             <td>
-                                                {{ $comment->comment }}
+                                                {{ $contact->email }}
                                             </td>
                                             <td>
-                                                <a href="{{ $comment->commentable_link }}">
-                                                    {{ $comment->commenatble_name }}
-                                                </a>
+                                                {{ $contact->phone }}
                                             </td>
                                             <td>
-                                                <button class="btn btn-sm btn-primary edit-comment" data-bs-toggle="modal"
-                                                    data-bs-target="#editCommentModal" data-id="{{ $comment->id }}"
-                                                    data-comment="{{ $comment->comment }}">
+                                                {{ $contact->address }}
+                                            </td>
+                                            <td>
+                                                {{ $contact->website }}
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('contacts.edit', $contact->id) }}"
+                                                    class="btn btn-sm btn-primary">
                                                     <i class="fa fa-edit"></i>
-                                                </button>
-                                                <form action="{{ route('comments.destroy', $comment->id) }}" method="POST"
+                                                </a>
+                                                <form action="{{ route('contacts.destroy', $contact->id) }}" method="POST"
                                                     class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
@@ -79,39 +94,8 @@
             </div>
         </div>
         <!-- End Row -->
-
     </div>
     <!-- CONTAINER CLOSED -->
-
-    {{-- Edit comment modal --}}
-    <div class="modal fade" id="editCommentModal" tabindex="-1" role="dialog" aria-labelledby="editCommentModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editCommentModalLabel">{{ __('Edit Comment') }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form id="editCommentForm" method="POST" action="{{ route('comments.update') }}">
-                    @csrf
-                    @method('PUT')
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="comment">{{ __('Comment') }}</label>
-                            <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
-                        </div>
-                    </div>
-                    <input type="hidden" name="id" id="id">
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
-                        <button type="submit" class="btn btn-primary">{{ __('Save changes') }}</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @push('plugin-scripts')
@@ -130,21 +114,11 @@
     <script src="{{ asset('assets/js/table-data.js') }}"></script>
     <script>
         $(function() {
-            $('#comments-datatable').DataTable({
+            $('#contacts-datatable').DataTable({
                 language: {
                     searchPlaceholder: 'Search...',
                     sSearch: '',
                 }
-            });
-
-            $('#editCommentModal').on('show.bs.modal', function(event) {
-                var button = $(event.relatedTarget);
-                var comment = button.data('comment');
-                var id = button.data('id');
-                var modal = $(this);
-                
-                $('#comment').val(comment);
-                $('#id').val(id);
             });
         });
     </script>
