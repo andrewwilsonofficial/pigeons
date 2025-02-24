@@ -49,6 +49,8 @@ class PigeonController extends Controller
             'date_hatched' => 'nullable|date',
         ]);
 
+        $validatedData['user_id'] = auth()->id();
+
         try {
             Pigeon::create($validatedData);
             return redirect()->route('pigeons.index')->with('success', 'Pigeon created successfully');
