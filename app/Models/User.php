@@ -18,7 +18,7 @@ class User extends Authenticatable
     protected static function booted()
     {
         static::created(function ($user) {
-            if($user->role === 'user') {
+            // if($user->role === 'user') {
                 SubscriptionLog::create([
                     'user_id' => $user->id,
                     'plan_id' => 1,
@@ -26,7 +26,7 @@ class User extends Authenticatable
                     'start_date' => now(),
                     'end_date' => now()->addDays(3),
                 ]);
-            }
+            // }
         });
     }
 
