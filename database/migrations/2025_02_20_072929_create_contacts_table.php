@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('website')->nullable();
             $table->string('relationship')->nullable();
             $table->string('notes')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

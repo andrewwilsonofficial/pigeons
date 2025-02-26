@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('total_birds')->nullable();
             $table->string('total_lofts')->nullable();
             $table->dateTime('release_time')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

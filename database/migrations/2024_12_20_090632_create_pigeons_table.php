@@ -34,6 +34,7 @@ return new class extends Migration
             $table->date('date_hatched')->nullable();
             $table->string('cover')->default('pigeon.png');
             $table->boolean('is_public')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

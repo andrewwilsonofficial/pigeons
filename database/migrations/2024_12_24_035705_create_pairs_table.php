@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->date('date_paired')->nullable();
             $table->date('date_separated')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

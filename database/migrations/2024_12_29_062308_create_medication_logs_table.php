@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('comments')->nullable();
             $table->date('date')->nullable();
             $table->json('pigeons')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

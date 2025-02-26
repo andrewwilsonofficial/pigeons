@@ -3,25 +3,30 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     protected static function booted()
     {
         static::created(function ($user) {
-            SubscriptionLog::create([
-                'user_id' => $user->id,
-                'plan_id' => 1,
-                'price' => 0,
-                'start_date' => now(),
-                'end_date' => now()->addDays(3),
-            ]);
+            if($user->role === 'user') {
+                SubscriptionLog::create([
+                    'user_id' => $user->id,
+                    'plan_id' => 1,
+                    'price' => 0,
+                    'start_date' => now(),
+                    'end_date' => now()->addDays(3),
+                ]);
+            }
         });
     }
 
@@ -70,6 +75,11 @@ class User extends Authenticatable
     public function isSubscribed()
     {
         return $this->subscription()->exists();
+    }
+
+    public function getPlanAttribute()
+    {
+        return $this->subscription ? $this->subscription->plan->name : __('No Plan');
     }
 
     public function getMyLoftAttribute()

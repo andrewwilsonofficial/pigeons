@@ -23,7 +23,7 @@
                 @endforeach
             @endif
             <div class="col-12 text-center">
-                @if (auth()->user()->isSubscribed())
+                @if (auth()->user()->isSubscribed() && auth()->user()->role != 'admin')
                     <img src="{{ asset('assets/images/map-pigeon.png') }}" alt="Map Pigeon" width="300" class="img-fluid">
                     <h4>
                         {{ __('You are in the home page') }}
@@ -32,7 +32,7 @@
                         {{ __('My pigeons') }}
                         <i class="fa fa-arrow-right"></i>
                     </a>
-                @else
+                @elseif (auth()->user()->role != 'admin')
                     <img src="{{ asset('assets/images/pigeon-sad.png') }}" alt="Map Pigeon" width="300"
                         class="img-fluid">
                     <h4 class="mt-3">
@@ -121,6 +121,11 @@
                             </div>
                         @endforeach
                     </div>
+                @else
+                    <img src="{{ asset('assets/images/map-pigeon.png') }}" alt="Map Pigeon" width="300" class="img-fluid">
+                    <h4>
+                        {{ __('Welcome to the dashboard') }}
+                    </h4>
                 @endif
             </div>
         </div>

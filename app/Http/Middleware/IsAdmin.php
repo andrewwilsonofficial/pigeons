@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class IsSubscribed
+class IsAdmin
 {
     /**
      * Handle an incoming request.
@@ -15,10 +15,6 @@ class IsSubscribed
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user()->isSubscribed() && auth()->user()->role === 'user') {
-            return $next($request);
-        }
-
-        return redirect()->route('home')->with('error', __('You must be subscribed to access this page.'));
+        return $next($request);
     }
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('price', 8, 2)->nullable();
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

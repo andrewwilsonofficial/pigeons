@@ -29,7 +29,7 @@ class PlanController extends Controller
         $attachments = [];
         if ($request->hasFile('attachments')) {
             foreach ($request->file('attachments') as $attachment) {
-                $attachments[] = $attachment->store('attachments');
+                $attachments[] = $attachment->store('attachments', 'public');
             }
         }
 

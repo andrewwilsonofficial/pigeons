@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdminAdminController;
+use App\Http\Controllers\AdminPlanController;
+use App\Http\Controllers\AdminSubscriptionController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
@@ -14,6 +18,7 @@ use App\Http\Controllers\StationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\PlanController;
+use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsSubscribed;
 
 Route::get('/', function () {
@@ -117,6 +122,44 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/contact/{contact}/edit', [ContactController::class, 'update'])->name('contacts.update');
         Route::delete('/contacts/{contact}', [ContactController::class, 'destroy'])->name('contacts.destroy');
     });
+
+    Route::middleware([IsAdmin::class])->group(function () {
+        Route::prefix('admin')->group(function () {
+            Route::get('/users', [AdminUserController::class, 'users'])->name('admin.users');
+            Route::get('/log-in-as-user/{user}', [AdminUserController::class, 'logInAsUser'])->name('admin.users.logInAsUser');
+            Route::delete('/user/{user}/delete', [AdminUserController::class, 'destroyUser'])->name('admin.users.destroy');
+
+            Route::get('/plans', [AdminPlanController::class, 'plans'])->name('admin.plans');
+            Route::get('/plan/{plan}/edit', [AdminPlanController::class, 'editPlan'])->name('admin.plans.edit');
+            Route::put('/plan/{plan}/edit', [AdminPlanController::class, 'updatePlan'])->name('admin.plans.update');
+
+            Route::get('/subscriptions', [AdminSubscriptionController::class, 'subscriptions'])->name('admin.subscriptions');
+            Route::post('/subscription/store', [AdminSubscriptionController::class, 'storeSubscription'])->name('admin.subscriptions.store');
+            Route::delete('/subscription/{subscriptionLog}/delete', [AdminSubscriptionController::class, 'destroySubscription'])->name('admin.subscriptions.destroy');
+
+            Route::delete('/subscription-request/{planSubscriptionRequest}/delete', [AdminSubscriptionController::class, 'destroySubscriptionRequest'])->name('admin.subscription-requests.destroy');
+            Route::get('/subscription-request/{planSubscriptionRequest}', [AdminSubscriptionController::class, 'viewSubscriptionRequest'])->name('admin.subscription-requests.view');
+            Route::post('/subscription-request/{planSubscriptionRequest}/approve', [AdminSubscriptionController::class, 'approveSubscriptionRequest'])->name('admin.subscription-requests.approve');
+            Route::post('/subscription-request/{planSubscriptionRequest}/reject', [AdminSubscriptionController::class, 'rejectSubscriptionRequest'])->name('admin.subscription-requests.reject');
+
+            Route::get('/admins', [AdminAdminController::class, 'admins'])->name('admin.admins');
+            Route::get('/admin/create', [AdminAdminController::class, 'createAdmin'])->name('admin.admins.create');
+            Route::post('/admin/create', [AdminAdminController::class, 'storeAdmin'])->name('admin.admins.store');
+            Route::get('/admin/{user}/edit', [AdminAdminController::class, 'editAdmin'])->name('admin.admins.edit');
+            Route::put('/admin/{user}/edit', [AdminAdminController::class, 'updateAdmin'])->name('admin.admins.update');
+            Route::delete('/admin/{admin}/delete', [AdminAdminController::class, 'destroyAdmin'])->name('admin.admins.destroy');
+        });
+    });
+
+    Route::get('/return-to-admin', function () {
+        if (session()->has('admin_user_id')) {
+            auth()->loginUsingId(session()->pull('admin_user_id'));
+
+            return redirect()->route('home');
+        }
+
+        return redirect()->route('home');
+    })->name('returnToAdmin');
 });
 
 

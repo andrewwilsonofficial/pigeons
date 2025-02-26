@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum('type', ['pigeon', 'pair', 'team']);
             $table->unsignedBigInteger('type_id');
             $table->text('comment');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -40,6 +40,11 @@
                             </div>
                             <!-- COUNTRY -->
                             <div class="d-flex">
+                                @if (session('admin_user_id'))
+                                    <a class="nav-link btn btn-primary btn-sm p-2 m-2" href="{{ route('returnToAdmin') }}">
+                                        {{ __('Return to Admin') }}
+                                    </a>
+                                @endif
                                 <a class="nav-link icon theme-layout nav-link-bg layout-setting">
                                     <span class="dark-layout"><i class="fe fe-moon"></i></span>
                                     <span class="light-layout"><i class="fe fe-sun"></i></span>
@@ -69,7 +74,7 @@
                                         </div>
                                     </div>
                                     <div class="dropdown-divider m-0"></div>
-                                    <a class="dropdown-item" href="#!">
+                                    <a class="dropdown-item" href="{{ route('profile.edit') }}">
                                         <i class="dropdown-icon fe fe-user"></i>
                                         Account
                                     </a>

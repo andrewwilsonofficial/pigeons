@@ -16,9 +16,19 @@ class DatabaseSeeder extends Seeder
         $this->call(PlanSeeder::class);
 
         User::factory()->create([
-            'name' => 'Ibrahim Issa',
-            'email' => 'testing@pigeons.test',
+            'name' => 'Admin Ibrahim',
+            'email' => 'admin@wilson-cloud-demos.site',
             'password' => bcrypt('password'),
+            'role' => 'admin',
+            'email_verified_at' => now(),
+        ]);
+
+        User::factory()->create([
+            'name' => 'User Ibrahim',
+            'email' => 'user@wilson-cloud-demos.site',
+            'password' => bcrypt('password'),
+            'role' => 'user',
+            'email_verified_at' => now(),
         ]);
 
         $this->call(PigeonSeeder::class);

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->boolean('current_season')->default(false);
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

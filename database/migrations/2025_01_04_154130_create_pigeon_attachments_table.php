@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('pigeon_id')->constrained()->onDelete('cascade');
             $table->string('filename');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

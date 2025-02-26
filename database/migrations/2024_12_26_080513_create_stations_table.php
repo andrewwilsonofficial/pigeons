@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('station_name');
             $table->string('location_name')->nullable();
             $table->string('location')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
