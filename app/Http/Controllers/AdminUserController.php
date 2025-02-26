@@ -22,4 +22,11 @@ class AdminUserController extends Controller
 
         return redirect()->route('home');
     }
+
+    public function destroyUser(User $user)
+    {
+        $user->delete();
+
+        return redirect()->route('admin.users')->with('success', __('User deleted successfully.'));
+    }
 }
