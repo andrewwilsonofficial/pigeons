@@ -82,7 +82,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
                                                 <a href="{{ route('pigeons.view', ['pigeon' => $pigeon->id]) }}">
-                                                    <img src="{{ asset('assets/images/' . $pigeon->cover) }}"
+                                                    <img src="{{ $pigeon->cover }}"
                                                         alt="image" class="img-fluid">
                                                 </a>
                                             </td>

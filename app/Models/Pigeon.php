@@ -32,7 +32,6 @@ class Pigeon extends Model
         'sex',
         'notes',
         'date_hatched',
-        'cover',
         'is_public',
     ];
 
@@ -71,5 +70,20 @@ class Pigeon extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class, 'type_id')->where('type', 'pigeon');
+    }
+
+    function getCoverAttribute($value)
+    {
+        $attachment = $this->attachments()->first();
+        if ($attachment) {
+            return route('pigeons.attachmentCover', $attachment->id);
+        } else {
+            return asset('assets/images/pigeon.png');
+        }
+    }
+
+    public function attachments()
+    {
+        return $this->hasMany(PigeonAttachment::class);
     }
 }

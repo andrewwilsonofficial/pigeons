@@ -75,7 +75,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
-                                                <img src="{{ asset('assets/images/' . $pigeon->cover) }}" alt="image"
+                                                <img src="{{ $pigeon->cover }}" alt="image"
                                                     class="img-fluid">
                                             </td>
                                             <td>{{ $pigeon->date_hatched }}</td>

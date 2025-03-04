@@ -23,7 +23,7 @@
                 <div class="pedigree-generation pedigree-g1">
                     <div class="pedigree-member">
                         <div class="pedigree-card pedigree-main-person">
-                            <img src="{{ asset('assets/images/' . $pigeon->cover) }}" alt="{{ $pigeon->band }}"
+                            <img src="{{ $pigeon->cover }}" alt="{{ $pigeon->band }}"
                                 class="pedigree-profile-pic">
                             <div class="pedigree-name">
                                 {{ $pigeon->band }}
@@ -36,7 +36,7 @@
                 <div class="pedigree-generation pedigree-g2">
                     <div class="pedigree-member pedigree-father-side">
                         <div class="pedigree-card">
-                            <img src="{{ asset('assets/images/' . $pigeon->sire->cover) }}" alt="{{ $pigeon->sire->band }}"
+                            <img src="{{ $pigeon->sire->cover }}" alt="{{ $pigeon->sire->band }}"
                                 class="pedigree-profile-pic">
                             <div class="pedigree-name">
                                 {{ $pigeon->sire->band }}
@@ -45,7 +45,7 @@
                     </div>
                     <div class="pedigree-member pedigree-mother-side">
                         <div class="pedigree-card">
-                            <img src="{{ asset('assets/images/' . $pigeon->dam->cover) }}" alt="{{ $pigeon->dam->band }}"
+                            <img src="{{ $pigeon->dam->cover }}" alt="{{ $pigeon->dam->band }}"
                                 class="pedigree-profile-pic">
                             <div class="pedigree-name">
                                 {{ $pigeon->dam->band }}
@@ -58,7 +58,7 @@
                 <div class="pedigree-generation pedigree-g3">
                     <div class="pedigree-member pedigree-father-side">
                         <div class="pedigree-card">
-                            <img src="{{ asset('assets/images/' . $pigeon->sire->sire->cover) }}" alt="{{ $pigeon->sire->sire->band }}"
+                            <img src="{{ $pigeon->sire->sire->cover }}" alt="{{ $pigeon->sire->sire->band }}"
                                 class="pedigree-profile-pic">
                             <div class="pedigree-name">
                                 {{ $pigeon->sire->sire->band }}
@@ -67,7 +67,7 @@
                     </div>
                     <div class="pedigree-member pedigree-father-side">
                         <div class="pedigree-card">
-                            <img src="{{ asset('assets/images/' . $pigeon->sire->dam->cover) }}" alt="{{ $pigeon->sire->dam->band }}"
+                            <img src="{{ $pigeon->sire->dam->cover }}" alt="{{ $pigeon->sire->dam->band }}"
                                 class="pedigree-profile-pic">
                             <div class="pedigree-name">
                                 {{ $pigeon->sire->dam->band }}
@@ -77,7 +77,7 @@
                     <div class="pedigree-spacer"></div>
                     <div class="pedigree-member pedigree-mother-side">
                         <div class="pedigree-card">
-                            <img src="{{ asset('assets/images/' . $pigeon->dam->sire->cover) }}" alt="{{ $pigeon->dam->sire->band }}"
+                            <img src="{{ $pigeon->dam->sire->cover }}" alt="{{ $pigeon->dam->sire->band }}"
                                 class="pedigree-profile-pic">
                             <div class="pedigree-name">
                                 {{ $pigeon->dam->sire->band }}
@@ -86,7 +86,7 @@
                     </div>
                     <div class="pedigree-member pedigree-mother-side">
                         <div class="pedigree-card">
-                            <img src="{{ asset('assets/images/' . $pigeon->dam->dam->cover) }}" alt="{{ $pigeon->dam->dam->band }}"
+                            <img src="{{ $pigeon->dam->dam->cover }}" alt="{{ $pigeon->dam->dam->band }}"
                                 class="pedigree-profile-pic">
                             <div class="pedigree-name">
                                 {{ $pigeon->dam->dam->band }}

@@ -50,6 +50,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/attachment-cover/{attachment}', [PigeonController::class, 'attachmentCover'])->name('pigeons.attachmentCover');
         Route::delete('/delete-pigeon/{pigeon}', [PigeonController::class, 'destroy'])->name('pigeons.destroy');
         Route::get('/pedigree/{pigeon}', [PigeonController::class, 'pedigree'])->name('pigeons.pedigree');
+        Route::post('/send-pigeon-link/{pigeon}', [PigeonController::class, 'sendPigeonLink'])->name('pigeons.sendPigeonLink');
 
         Route::get('/statistics', [PigeonController::class, 'statistics'])->name('pigeons.statistics');
         Route::get('/public-pigeons', [PigeonController::class, 'publicPigeons'])->name('pigeons.public');
@@ -168,5 +169,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('public-pigeon/{pigeon}', [PigeonController::class, 'publicPigeon'])->name('pigeons.publicPigeon');
 
 require __DIR__ . '/auth.php';

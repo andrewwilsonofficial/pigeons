@@ -72,12 +72,31 @@
                                                     <label for="is_public" class="onoffswitch2-label"></label>
                                                 </p>
                                             </div>
-                                            <div class="col-md-9">
+                                            <div class="col-md-9 text-left">
                                                 <label
                                                     class="form-check-label {{ $pigeon->is_public ? 'text-success' : 'text-danger' }}"
                                                     for="is_public">
                                                     {{ __('Viewable by the public') }}
                                                 </label>
+                                            </div>
+                                            <div class="col-12">
+                                                @if ($pigeon->is_public)
+                                                    <button class="btn btn-primary btn-sm mb-1" data-bs-toggle="modal"
+                                                        data-bs-target="#sendLinkByEmail">
+                                                        {{ __('Share public record by Email') }}
+                                                        <i class="fa fa-envelope"></i>
+                                                    </button>
+                                                    <a href="{{ route('pigeons.publicPigeon', $pigeon->id) }}"
+                                                        class="btn btn-primary btn-sm mb-1" target="_blank">
+                                                        {{ __('View public record') }}
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                    <button class="btn btn-primary btn-sm mb-1" data-bs-toggle="modal"
+                                                        data-bs-target="#viewQR">
+                                                        {{ __('Public record QR') }}
+                                                        <i class="fa fa-qrcode"></i>
+                                                    </button>
+                                                @endif
                                             </div>
                                             <form action="{{ route('pigeons.update', $pigeon->id) }}" method="POST"
                                                 id="is_public_form">
@@ -102,8 +121,7 @@
                                 <hr>
                             </div>
                             <div class="col-12- text-center">
-                                <img src="{{ asset('assets/images/' . $pigeon->cover) }}" width="300" alt="image"
-                                    class="img-fluid">
+                                <img src="{{ $pigeon->cover }}" width="300" alt="image" class="img-fluid">
                             </div>
                             <div class="col-12- text-center">
                                 <h2>
@@ -444,6 +462,58 @@
                         </button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="sendLinkByEmail" tabindex="-1" aria-labelledby="sendLinkByEmailLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('pigeons.sendPigeonLink', $pigeon->id) }}" method="POST">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="sendLinkByEmailLabel">{{ __('Send link by email') }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="email">{{ __('Email') }}</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="{{ __('Enter email') }}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            {{ __('Close') }}
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            {{ __('Send link') }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="viewQR" tabindex="-1" aria-labelledby="viewQRLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewQRLabel">{{ __('Public record QR code') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="{{ $pigeon->qr_code }}" alt="{{ $pigeon->band }}" class="img-fluid">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        {{ __('Close') }}
+                    </button>
+                    <a href="{{ $pigeon->qr_code }}" download="{{ $pigeon->band }} - {{ $pigeon->id }}.png"
+                        class="btn btn-primary">
+                        {{ __('Download QR code') }}
+                        <i class="fa fa-download"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

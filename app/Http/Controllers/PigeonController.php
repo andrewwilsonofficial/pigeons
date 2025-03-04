@@ -170,7 +170,7 @@ class PigeonController extends Controller
 
     public function publicPigeons()
     {
-        $pigeons = Pigeon::where('is_public', true)->get();
+        $pigeons = Pigeon::where('is_public', true)->where('user_id', auth()->id())->get();
 
         return view('pigeons.public', compact('pigeons'));
     }
@@ -185,5 +185,25 @@ class PigeonController extends Controller
     public function pedigree(Pigeon $pigeon)
     {
         return view('pigeons.pedigree', compact('pigeon'));
+    }
+
+    public function sendPigeonLink(Request $request, Pigeon $pigeon)
+    {
+        $validatedData = $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $pigeon->sendLink($validatedData['email']);
+
+        return redirect()->back()->with('success', __('Link sent successfully'));
+    }
+
+    public function publicPigeon(Pigeon $pigeon)
+    {
+        if ($pigeon->is_public) {
+            return view('pigeons.public-view', compact('pigeon'));
+        } else {
+            abort(404);
+        }
     }
 }
