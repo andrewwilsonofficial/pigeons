@@ -54,7 +54,6 @@ class Pigeon extends Model
         return $this->belongsTo(Pigeon::class, 'sire_id')->withDefault([
             'name' => 'Unknown',
             'band' => 'Unknown',
-            'cover' => 'map-pigeon.png',
         ]);
     }
 
@@ -63,7 +62,6 @@ class Pigeon extends Model
         return $this->belongsTo(Pigeon::class, 'dam_id')->withDefault([
             'name' => 'Unknown',
             'band' => 'Unknown',
-            'cover' => 'map-pigeon.png',
         ]);
     }
 

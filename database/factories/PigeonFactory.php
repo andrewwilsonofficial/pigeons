@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Pigeon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,12 @@ class PigeonFactory extends Factory
      */
     public function definition(): array
     {
+        $sire_id = Pigeon::inRandomOrder()->first()->id ?? null;
+        $dam_id = Pigeon::inRandomOrder()->first()->id ?? null;
         return [
-            'user_id' => 1,
+            'user_id' => 2,
+            'sire_id' => $sire_id,
+            'dam_id' => $dam_id,
             'name' => $this->faker->name,
             'band' => $this->faker->word,
             'second_band' => $this->faker->word,
@@ -34,7 +39,6 @@ class PigeonFactory extends Factory
             'sex' => $this->faker->randomElement(['unknown', 'hen', 'cock']),
             'notes' => $this->faker->sentence,
             'date_hatched' => $this->faker->date,
-            'cover' => 'pigeon.png',
             'is_public' => $this->faker->boolean,
         ];
     }

@@ -204,16 +204,48 @@
                                             {{ __('Sire') }} & {{ __('Dam') }}
                                         </h4>
                                         <p>
-                                            <strong>{{ __('Sire') }}:</strong> {{ $pigeon->sire->name }}
+                                            <strong>{{ __('Sire') }}:</strong>
+                                            @if (!$pigeon->sire->id)
+                                                {{ $pigeon->sire->name }}
+                                            @else
+                                                <a href="{{ route('pigeons.publicPigeon', $pigeon->sire->id) }}"
+                                                    target="_blank">
+                                                    {{ $pigeon->sire->name }}
+                                                </a>
+                                            @endif
                                         </p>
                                         <p>
-                                            <strong>{{ __('Sire band') }}:</strong> {{ $pigeon->sire->band }}
+                                            <strong>{{ __('Sire band') }}:</strong>
+                                            @if (!$pigeon->sire->id)
+                                                {{ $pigeon->sire->band }}
+                                            @else
+                                                <a href="{{ route('pigeons.publicPigeon', $pigeon->sire->id) }}"
+                                                    target="_blank">
+                                                    {{ $pigeon->sire->band }}
+                                                </a>
+                                            @endif
                                         </p>
                                         <p>
-                                            <strong>{{ __('Dam') }}:</strong> {{ $pigeon->dam->name }}
+                                            <strong>{{ __('Dam') }}:</strong>
+                                            @if (!$pigeon->dam->id)
+                                                {{ $pigeon->dam->name }}
+                                            @else
+                                                <a href="{{ route('pigeons.publicPigeon', $pigeon->dam->id) }}"
+                                                    target="_blank">
+                                                    {{ $pigeon->dam->name }}
+                                                </a>
+                                            @endif
                                         </p>
                                         <p>
-                                            <strong>{{ __('Dam band') }}:</strong> {{ $pigeon->dam->band }}
+                                            <strong>{{ __('Dam band') }}:</strong> 
+                                            @if (!$pigeon->dam->id)
+                                                {{ $pigeon->dam->band }}
+                                            @else
+                                                <a href="{{ route('pigeons.publicPigeon', $pigeon->dam->id) }}"
+                                                    target="_blank">
+                                                    {{ $pigeon->dam->band }}
+                                                </a>
+                                            @endif
                                         </p>
                                     </div>
                                 </div>

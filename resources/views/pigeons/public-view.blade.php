@@ -102,7 +102,7 @@
                                         </h4>
                                         <p>
                                             <strong>{{ __('Sire') }}:</strong>
-                                            @if ($pigeon->sire)
+                                            @if (!$pigeon->sire->id)
                                                 {{ $pigeon->sire->name }}
                                             @else
                                                 <a href="{{ route('pigeons.publicPigeon', $pigeon->sire->id) }}"
@@ -113,7 +113,7 @@
                                         </p>
                                         <p>
                                             <strong>{{ __('Sire band') }}:</strong>
-                                            @if ($pigeon->sire)
+                                            @if (!$pigeon->sire->id)
                                                 {{ $pigeon->sire->band }}
                                             @else
                                                 <a href="{{ route('pigeons.publicPigeon', $pigeon->sire->id) }}"
@@ -124,7 +124,7 @@
                                         </p>
                                         <p>
                                             <strong>{{ __('Dam') }}:</strong>
-                                            @if ($pigeon->dam)
+                                            @if (!$pigeon->dam->id)
                                                 {{ $pigeon->dam->name }}
                                             @else
                                                 <a href="{{ route('pigeons.publicPigeon', $pigeon->dam->id) }}"
@@ -135,7 +135,7 @@
                                         </p>
                                         <p>
                                             <strong>{{ __('Dam band') }}:</strong> 
-                                            @if ($pigeon->dam)
+                                            @if (!$pigeon->dam->id)
                                                 {{ $pigeon->dam->band }}
                                             @else
                                                 <a href="{{ route('pigeons.publicPigeon', $pigeon->dam->id) }}"

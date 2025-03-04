@@ -12,6 +12,8 @@ class PigeonSeeder extends Seeder
      */
     public function run(): void
     {
-        Pigeon::factory()->count(100)->create();
+        for ($i = 0; $i < 100; $i++) {
+            Pigeon::factory()->create();
+        }
     }
 }
