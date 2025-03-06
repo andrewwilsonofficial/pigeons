@@ -70,8 +70,8 @@ class PairController extends Controller
             throw new \RuntimeException($process->getErrorOutput());
         }
 
-        // return response()->download($outputPath, $pdf_file_name . '.pdf')->deleteFileAfterSend(true);
-        return response()->file($outputPath)->deleteFileAfterSend(true);
+        return response()->download($outputPath, $pdf_file_name . '.pdf')->deleteFileAfterSend(true);
+        // return response()->file($outputPath)->deleteFileAfterSend(true);
     }
 
     public function editPair(Pair $pair)
