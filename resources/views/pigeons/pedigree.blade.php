@@ -18,6 +18,12 @@
         <!-- PAGE-HEADER END -->
         <!-- Row -->
         <div class="row row-sm">
+            <div class="col-12 text-center">
+                <a class="btn btn-outline-primary" href="{{ route('pigeons.downloadPedigree', $pigeon->id) }}" target="_blank">
+                    {{ __('Download Pedigree') }}
+                    <i class="fa fa-download"></i>
+                </a>
+            </div>
             <div class="pedigree-tree">
                 <!-- Main Person -->
                 <div class="pedigree-generation pedigree-g1">

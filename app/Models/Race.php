@@ -51,4 +51,33 @@ class Race extends Model
 
         return $base64_qr_encoded;
     }
+
+    public function getRaceDistanceAttribute()
+    {
+        try {
+            $earthRadius = 6371000;
+
+            $latFrom = deg2rad((float) $this->release_latitude);
+            $lonFrom = deg2rad((float) $this->release_longitude);
+            $latTo = deg2rad((float) $this->destination_latitude);
+            $lonTo = deg2rad((float) $this->destination_longitude);
+
+            $latDelta = $latTo - $latFrom;
+            $lonDelta = $lonTo - $lonFrom;
+
+            $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
+                cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
+
+            $distance = $angle * $earthRadius;
+
+            // Covert the distance to readable units, depending on the distance
+            if ($distance < 1000) {
+                return round($distance) . ' m';
+            } else {
+                return round($distance / 1000, 2) . ' km';
+            }
+        } catch (\Throwable $th) {
+            return __('Unknown');
+        }
+    }
 }

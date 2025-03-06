@@ -98,7 +98,9 @@
                                                 </a>
                                             </td>
                                             <td>
-
+                                                <a href="{{ route('pigeons.view', ['pigeon' => $pigeon->id]) }}">
+                                                    {{ $pigeon->second_band }}
+                                                </a>
                                             </td>
                                             <td>{{ $pigeon->sire->name }}</td>
                                             <td>{{ $pigeon->dam->name }}</td>

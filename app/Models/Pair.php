@@ -58,4 +58,11 @@ class Pair extends Model
             'band' => __('Not assigned')
         ]);
     }
+
+    public function getChildrenAttribute()
+    {
+        return Pigeon::where('dam_id', $this->hen_id)
+            ->where('sire_id', $this->cock_id)
+            ->get();
+    }
 }

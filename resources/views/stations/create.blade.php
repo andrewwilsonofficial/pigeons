@@ -52,7 +52,8 @@
                                     <div class="form-group">
                                         <label for="coordinate">{{ __('Coordinate') }}</label>
                                         <input type="text" class="form-control" id="location" name="location"
-                                            placeholder="{{ __('Enter coordinate') }}" value="{{ old('coordinate') }}" readonly required>
+                                            placeholder="{{ __('Enter coordinate') }}" value="{{ old('coordinate') }}"
+                                            required>
                                     </div>
                                 </div>
                             </div>
@@ -75,13 +76,16 @@
         href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css">
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
     <script>
-        mapboxgl.accessToken = 'pk.eyJ1IjoiaWJyYWhpbXBocCIsImEiOiJja200dTRiZTQwODMzMnBxbDNvYWxvaWE0In0.8bVNmZQhKtQlPLDtKna_9A';
+        mapboxgl.accessToken =
+            'pk.eyJ1IjoiaWJyYWhpbXBocCIsImEiOiJja200dTRiZTQwODMzMnBxbDNvYWxvaWE0In0.8bVNmZQhKtQlPLDtKna_9A';
         var map = new mapboxgl.Map({
             container: 'map', // container id
             style: 'mapbox://styles/mapbox/streets-v11',
-            center: [ -74.0059728000, 40.7127753000 ], // starting position [lng, lat]
+            center: [-74.0059728000, 40.7127753000], // starting position [lng, lat]
             zoom: 9 // starting zoom
         });
+
+        var last_valid_location = null;
 
         var geocoder = new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
@@ -117,6 +121,30 @@
                 mapboxgl.accessToken
 
             document.getElementById("location").value = coordinates.lat + ',' + coordinates.lng;
+            last_valid_location = coordinates.lat + ',' + coordinates.lng;
         }
+
+        document.getElementById('location').addEventListener('change', function(e) {
+            var coordinates = e.target.value.split(',');
+            if (coordinates.length !== 2 || isNaN(coordinates[0]) || isNaN(coordinates[1])) {
+                alert('Invalid coordinates. Please enter valid coordinates.');
+                e.target.value = last_valid_location;
+                return;
+            } else {
+                last_valid_location = e.target.value;
+            }
+            coordinates = [parseFloat(coordinates[1]), parseFloat(coordinates[0])];
+            if (marker == null) {
+                marker = new mapboxgl.Marker()
+                    .setLngLat(coordinates)
+                    .addTo(map);
+            } else {
+                marker.setLngLat(coordinates);
+            }
+            map.flyTo({
+                center: coordinates,
+                zoom: 15
+            });
+        });
     </script>
 @endpush

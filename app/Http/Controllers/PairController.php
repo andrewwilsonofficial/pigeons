@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Pair;
 use App\Models\Pigeon;
 use App\Models\Season;
+use Illuminate\Support\Facades\View;
+use Symfony\Component\Process\Process;
 use Illuminate\Http\Request;
 
 class PairController extends Controller
@@ -12,8 +14,9 @@ class PairController extends Controller
     public function pairs()
     {
         $pairs = Pair::where('user_id', auth()->id())->get();
+        $seasons = Season::where('user_id', auth()->id())->get();
 
-        return view('pairs.index', compact('pairs'));
+        return view('pairs.index', compact('pairs', 'seasons'));
     }
 
     public function createPair()
@@ -50,6 +53,25 @@ class PairController extends Controller
     public function pair(Pair $pair)
     {
         return view('pairs.view', compact('pair'));
+    }
+
+    public function pairPdf(Pair $pair)
+    {
+        // return view('components.pdf.pair', compact('pair'));
+        $pdf_file_name = 'pair_' . $pair->id . '.pdf';
+        $html = View::make('components.pdf.pair', ['pair' => $pair])->render();
+        $outputPath = storage_path('app/' . $pdf_file_name . '.pdf');
+
+        $generatePdfScript = base_path('nodejs/generate-pdf.js');
+        $process = new Process(['node', $generatePdfScript, $html, $outputPath]);
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException($process->getErrorOutput());
+        }
+
+        // return response()->download($outputPath, $pdf_file_name . '.pdf')->deleteFileAfterSend(true);
+        return response()->file($outputPath)->deleteFileAfterSend(true);
     }
 
     public function editPair(Pair $pair)
@@ -94,5 +116,30 @@ class PairController extends Controller
         $pair->delete();
 
         return redirect()->route('pairs')->with('success', __('Pair deleted successfully'));
+    }
+
+    public function getChildrens(Request $request)
+    {
+        $pair = Pair::find($request->id);
+        if (!$pair) {
+            abort(404);
+        }
+
+        $pigeons = $pair->children;
+
+        return view('components.tables.pigeons', compact('pigeons'));
+    }
+
+    public function addToSeason(Request $request)
+    {
+        $pair = Pair::find($request->pair_id);
+        if (!$pair || $pair->user_id !== auth()->id()) {
+            return redirect()->route('pairs')->with('error', __('Unauthorized access or pair not found'));
+        }
+
+        $pair->season_id = $request->season_id;
+        $pair->save();
+
+        return redirect()->route('pairs')->with('success', __('Pair added to season successfully'));
     }
 }

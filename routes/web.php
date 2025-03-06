@@ -50,6 +50,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/attachment-cover/{attachment}', [PigeonController::class, 'attachmentCover'])->name('pigeons.attachmentCover');
         Route::delete('/delete-pigeon/{pigeon}', [PigeonController::class, 'destroy'])->name('pigeons.destroy');
         Route::get('/pedigree/{pigeon}', [PigeonController::class, 'pedigree'])->name('pigeons.pedigree');
+        Route::get('/pedigree/{pigeon}/download', [PigeonController::class, 'downloadPedigree'])->name('pigeons.downloadPedigree');
         Route::post('/send-pigeon-link/{pigeon}', [PigeonController::class, 'sendPigeonLink'])->name('pigeons.sendPigeonLink');
 
         Route::get('/statistics', [PigeonController::class, 'statistics'])->name('pigeons.statistics');
@@ -67,9 +68,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/pairs/create', [PairController::class, 'createPair'])->name('pairs.create');
         Route::post('/pairs/create', [PairController::class, 'storePair'])->name('pairs.store');
         Route::get('/pair/{pair}', [PairController::class, 'pair'])->name('pair');
+        Route::get('/pair-pdf/{pair}', [PairController::class, 'pairPdf'])->name('pair.pdf');
         Route::get('/pair/{pair}/edit', [PairController::class, 'editPair'])->name('pairs.edit');
         Route::put('/pair/{pair}/edit', [PairController::class, 'updatePair'])->name('pairs.update');
         Route::delete('/pair/{pair}/delete', [PairController::class, 'destroyPair'])->name('pairs.destroy');
+        Route::get('/get-childrens', [PairController::class, 'getChildrens'])->name('pairs.getChildrens');
+        Route::post('/pair/add-to-season', [PairController::class, 'addToSeason'])->name('pairs.addToSeason');
 
         Route::get('/teams', [TeamController::class, 'teams'])->name('teams');
         Route::get('/teams/create', [TeamController::class, 'createTeam'])->name('teams.create');

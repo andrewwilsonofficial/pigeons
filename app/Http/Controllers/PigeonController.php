@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pair;
 use App\Models\Pigeon;
 use App\Models\PigeonAttachment;
 use Illuminate\Http\Request;
+use Symfony\Component\Process\Process;
+use Illuminate\Support\Facades\View;
 
 class PigeonController extends Controller
 {
@@ -22,10 +25,7 @@ class PigeonController extends Controller
 
     public function create()
     {
-        $sires = Pigeon::where('user_id', auth()->id())->where('sex', 'cock')->get();
-        $dams = Pigeon::where('user_id', auth()->id())->where('sex', 'hen')->get();
-
-        return view('pigeons.create', compact('sires', 'dams'));
+        return view('pigeons.create');
     }
 
     public function store(Request $request)
@@ -51,9 +51,17 @@ class PigeonController extends Controller
 
         $validatedData['user_id'] = auth()->id();
 
+        if ($request->has('pair_id')) {
+            $pair = Pair::find($request->input('pair_id'));
+            if ($pair) {
+                $validatedData['sire_id'] = $pair->cock_id;
+                $validatedData['dam_id'] = $pair->hen_id;
+            }
+        }
+
         try {
             Pigeon::create($validatedData);
-            return redirect()->route('pigeons.index')->with('success', 'Pigeon created successfully');
+            return redirect()->back()->with('success', __('Pigeon created successfully'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to create pigeon: ' . $e->getMessage());
         }
@@ -185,6 +193,23 @@ class PigeonController extends Controller
     public function pedigree(Pigeon $pigeon)
     {
         return view('pigeons.pedigree', compact('pigeon'));
+    }
+
+    public function downloadPedigree(Pigeon $pigeon)
+    {
+        $pdf_file_name = 'pigeon_pedigree_' . $pigeon->id . '.pdf';
+        $html = View::make('components.pdf.pigeon-pedigree', ['pigeon' => $pigeon])->render();
+        $outputPath = storage_path('app/' . $pdf_file_name . '.pdf');
+
+        $generatePdfScript = base_path('nodejs/generate-pdf.js');
+        $process = new Process(['node', $generatePdfScript, $html, $outputPath]);
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException($process->getErrorOutput());
+        }
+
+        return response()->download($outputPath, $pdf_file_name . '.pdf')->deleteFileAfterSend(true);
     }
 
     public function sendPigeonLink(Request $request, Pigeon $pigeon)

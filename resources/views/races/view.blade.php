@@ -64,10 +64,10 @@
                                 </h2>
                             </div>
                             <div class="col-12 text-center mb-3">
-                                <button class="btn btn-primary">
+                                <a href="{{ route('races.edit', $race->id) }}" class="btn btn-primary">
                                     {{ __('Edit race') }}
                                     <i class="fa fa-edit"></i>
-                                </button>
+                                </a>
                             </div>
                             <div class="col-md-6">
                                 <div class="card">
@@ -103,7 +103,8 @@
                                             {{ __('Distance information') }}
                                         </h4>
                                         <p>
-                                            <strong>{{ __('Release point name') }}:</strong> {{ $race->release_point_name }}
+                                            <strong>{{ __('Release point name') }}:</strong>
+                                            {{ $race->release_point_name }}
                                         </p>
                                         <p>
                                             <strong>{{ __('Release longitude') }}:</strong> {{ $race->release_longitude }}
@@ -112,13 +113,19 @@
                                             <strong>{{ __('Release latitude') }}:</strong> {{ $race->release_latitude }}
                                         </p>
                                         <p>
-                                            <strong>{{ __('Destination point name') }}:</strong> {{ $race->destination_point_name }}
+                                            <strong>{{ __('Destination point name') }}:</strong>
+                                            {{ $race->destination_point_name }}
                                         </p>
                                         <p>
-                                            <strong>{{ __('Destination longitude') }}:</strong> {{ $race->destination_longitude }}
+                                            <strong>{{ __('Destination longitude') }}:</strong>
+                                            {{ $race->destination_longitude }}
                                         </p>
                                         <p>
-                                            <strong>{{ __('Destination latitude') }}:</strong> {{ $race->destination_latitude }}
+                                            <strong>{{ __('Destination latitude') }}:</strong>
+                                            {{ $race->destination_latitude }}
+                                        </p>
+                                        <p>
+                                            <strong>{{ __('Destination') }}:</strong> {{ $race->race_distance }}
                                         </p>
                                     </div>
                                 </div>
@@ -130,7 +137,8 @@
                                             {{ __('Meta information') }}
                                         </h4>
                                         <p>
-                                            <strong>{{ __('Release temperature') }}:</strong> {{ $race->release_temperature }}
+                                            <strong>{{ __('Release temperature') }}:</strong>
+                                            {{ $race->release_temperature }}
                                         </p>
                                         <p>
                                             <strong>{{ __('Release weather') }}:</strong> {{ $race->release_weather }}
@@ -139,10 +147,12 @@
                                             <strong>{{ __('Release notes') }}:</strong> {{ $race->release_notes }}
                                         </p>
                                         <p>
-                                            <strong>{{ __('Destination temperature') }}:</strong> {{ $race->destination_temperature }}
+                                            <strong>{{ __('Destination temperature') }}:</strong>
+                                            {{ $race->destination_temperature }}
                                         </p>
                                         <p>
-                                            <strong>{{ __('Destination weather') }}:</strong> {{ $race->destination_weather }}
+                                            <strong>{{ __('Destination weather') }}:</strong>
+                                            {{ $race->destination_weather }}
                                         </p>
                                         <p>
                                             <strong>{{ __('Destination notes') }}:</strong> {{ $race->destination_notes }}
