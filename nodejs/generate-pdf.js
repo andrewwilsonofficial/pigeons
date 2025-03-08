@@ -3,7 +3,10 @@ import path from "path";
 
 async function generatePdf(html, outputFileName) {
     try {
-        const browser = await puppeteer.launch();
+        // const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({
+            executablePath: '/home/wilsoncl/.cache/puppeteer/chrome/linux-133.0.6943.141/chrome-linux64/chrome',
+        });
         const page = await browser.newPage();
         await page.setContent(html);
         await page.pdf({
