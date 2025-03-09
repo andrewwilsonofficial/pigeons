@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer";
+import path from "path";
 
 async function generatePdf(html, outputFileName) {
     try {

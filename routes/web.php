@@ -176,9 +176,4 @@ Route::middleware('auth')->group(function () {
 
 Route::get('public-pigeon/{pigeon}', [PigeonController::class, 'publicPigeon'])->name('pigeons.publicPigeon');
 
-Route::get('/test', function () {
-    $output = shell_exec('/www/server/nodejs/v20.10.0/bin/node -v 2>&1');
-    echo $output;
-});
-
 require __DIR__ . '/auth.php';
