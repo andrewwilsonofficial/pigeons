@@ -47,6 +47,8 @@ class PigeonController extends Controller
             'sex' => 'required|string|in:unknown,cock,hen',
             'notes' => 'nullable|string',
             'date_hatched' => 'nullable|date',
+            'sire_id' => 'nullable|integer|exists:pigeons,id',
+            'dam_id' => 'nullable|integer|exists:pigeons,id',
         ]);
 
         $validatedData['user_id'] = auth()->id();
