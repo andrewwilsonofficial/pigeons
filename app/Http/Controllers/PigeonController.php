@@ -199,18 +199,35 @@ class PigeonController extends Controller
     {
         $pdf_file_name = 'pigeon_pedigree_' . $pigeon->id . '.pdf';
         $html = View::make('components.pdf.pigeon-pedigree', ['pigeon' => $pigeon])->render();
-        $outputPath = storage_path('app/' . $pdf_file_name . '.pdf');
+
+        // Create a temporary file for HTML content
+        $tempHtmlFile = tempnam(sys_get_temp_dir(), 'pigeon_html_');
+        file_put_contents($tempHtmlFile, $html);
+
+        $outputPath = storage_path('app/' . $pdf_file_name);
 
         $generatePdfScript = base_path('nodejs/generate-pdf.js');
-        $process = new Process(['/www/server/nodejs/v20.10.0/bin/node', $generatePdfScript, $html, $outputPath]);
+
+        // Pass temp file path instead of HTML content
+        $process = new Process([
+            '/www/server/nodejs/v20.10.0/bin/node',
+            $generatePdfScript,
+            $tempHtmlFile,
+            $outputPath
+        ]);
+
         $process->run();
+
+        // Cleanup temp file
+        unlink($tempHtmlFile);
 
         if (!$process->isSuccessful()) {
             $errorOutput = $process->getErrorOutput();
-            throw new \RuntimeException($errorOutput ?: 'An unknown error occurred while generating the PDF.');
+            \Log::error("PDF Generation Error: $errorOutput");
+            throw new \RuntimeException($errorOutput ?: 'PDF generation failed');
         }
 
-        return response()->download($outputPath, $pdf_file_name . '.pdf')->deleteFileAfterSend(true);
+        return response()->download($outputPath, $pdf_file_name)->deleteFileAfterSend(true);
     }
 
     public function sendPigeonLink(Request $request, Pigeon $pigeon)
