@@ -176,24 +176,4 @@ Route::middleware('auth')->group(function () {
 
 Route::get('public-pigeon/{pigeon}', [PigeonController::class, 'publicPigeon'])->name('pigeons.publicPigeon');
 
-Route::get('/test', function () {
-    $command = '/www/server/nodejs/v20.10.0/bin/node -v';
-    $descriptorspec = [
-        0 => ["pipe", "r"],  // stdin
-        1 => ["pipe", "w"],  // stdout
-        2 => ["pipe", "w"]   // stderr
-    ];
-    $process = proc_open($command, $descriptorspec, $pipes);
-
-    if (is_resource($process)) {
-        $output = stream_get_contents($pipes[1]);
-        fclose($pipes[1]);
-        fclose($pipes[2]);
-        proc_close($process);
-    }
-
-    dd($output);
-});
-
-
 require __DIR__ . '/auth.php';

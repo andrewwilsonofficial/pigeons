@@ -1,14 +1,8 @@
 import puppeteer from "puppeteer";
 
-import fs from 'fs';
-fs.writeFileSync('dummy.txt', 'Hello World!');
-console.log('Dummy file created!');
-
 async function generatePdf(html, outputFileName) {
     try {
-        const browser = await puppeteer.launch({
-            args: ['--no-sandbox', '--disable-setuid-sandbox']
-        });
+        const browser = await puppeteer.launch();
         const page = await browser.newPage();
         await page.setContent(html);
         await page.pdf({
