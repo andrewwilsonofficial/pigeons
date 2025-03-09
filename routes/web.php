@@ -178,7 +178,7 @@ Route::get('public-pigeon/{pigeon}', [PigeonController::class, 'publicPigeon'])-
 
 Route::get('/test', function () {
     // Run a test nodejs command
-    $output = shell_exec('node -v');
+    $output = shell_exec('/www/server/nodejs/v20.10.0/bin/node -v');
     dd($output);
 });
 
