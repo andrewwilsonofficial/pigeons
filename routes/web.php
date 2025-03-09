@@ -176,4 +176,9 @@ Route::middleware('auth')->group(function () {
 
 Route::get('public-pigeon/{pigeon}', [PigeonController::class, 'publicPigeon'])->name('pigeons.publicPigeon');
 
+Route::get('/test', function () {
+    $output = shell_exec('node nodejs/generate-pdf.js "test" "test.pdf" 2>&1');
+    dd($output);
+});
+
 require __DIR__ . '/auth.php';

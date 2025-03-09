@@ -1,6 +1,4 @@
 import puppeteer from "puppeteer";
-// import path from "path"; // Removed unused import
-
 async function generatePdf(html, outputFileName) {
     try {
         const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
