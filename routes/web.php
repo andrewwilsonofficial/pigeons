@@ -178,6 +178,7 @@ Route::get('public-pigeon/{pigeon}', [PigeonController::class, 'publicPigeon'])-
 
 Route::get('/test', function () {
     $env = shell_exec('env');
+    echo exec('whoami');
     echo $env;
 });
 
