@@ -177,7 +177,8 @@ Route::middleware('auth')->group(function () {
 Route::get('public-pigeon/{pigeon}', [PigeonController::class, 'publicPigeon'])->name('pigeons.publicPigeon');
 
 Route::get('/test', function () {
-    echo exec('sudo');
+    $output = shell_exec('efefwe 2>&1');
+    echo $output;
 });
 
 require __DIR__ . '/auth.php';
