@@ -6,8 +6,10 @@ use App\Models\Pair;
 use App\Models\Pigeon;
 use App\Models\PigeonAttachment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Process\Process;
 use Illuminate\Support\Facades\View;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class PigeonController extends Controller
 {
@@ -199,18 +201,32 @@ class PigeonController extends Controller
     {
         $pdf_file_name = 'pigeon_pedigree_' . $pigeon->id . '.pdf';
         $html = View::make('components.pdf.pigeon-pedigree', ['pigeon' => $pigeon])->render();
-        $outputPath = storage_path('app/' . $pdf_file_name . '.pdf');
-
+        $outputPath = storage_path('app/' . $pdf_file_name);
+    
         $generatePdfScript = base_path('nodejs/generate-pdf.js');
+        
+        // Create the Process instance
         $process = new Process(['node', $generatePdfScript, $html, $outputPath]);
-        $process->run();
-
-        if (!$process->isSuccessful()) {
-            $errorOutput = $process->getErrorOutput();
-            throw new \RuntimeException($errorOutput ?: 'An unknown error occurred while generating the PDF.');
+        
+        try {
+            $process->mustRun(); // This will throw an exception on failure
+        
+            return response()->download($outputPath, $pdf_file_name)
+                            ->deleteFileAfterSend(true);
+                            
+        } catch (ProcessFailedException $exception) {
+            $error = $exception->getMessage();
+            $output = $exception->getOutput();
+            $errorOutput = $exception->getErrorOutput();
+            
+            Log::error("PDF Generation Failed", [
+                'output' => $output,
+                'error' => $errorOutput,
+                'command' => $process->getCommandLine()
+            ]);
+            
+            throw new \RuntimeException("PDF generation failed: " . $errorOutput);
         }
-
-        return response()->download($outputPath, $pdf_file_name . '.pdf')->deleteFileAfterSend(true);
     }
 
     public function sendPigeonLink(Request $request, Pigeon $pigeon)
