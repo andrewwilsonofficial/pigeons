@@ -199,29 +199,15 @@ class PigeonController extends Controller
     {
         $pdf_file_name = 'pigeon_pedigree_' . $pigeon->id . '.pdf';
         $html = View::make('components.pdf.pigeon-pedigree', ['pigeon' => $pigeon])->render();
-        $html = '<!DOCTYPE html><html><head><meta charset="utf-8"></head><body>this is a test</body></html>';
         $outputPath = storage_path('app/' . $pdf_file_name . '.pdf');
 
         $generatePdfScript = base_path('nodejs/generate-pdf.js');
-        // $process = new Process(['node', $generatePdfScript, $html, $outputPath]);
-        // Run a test command to check if the process is working
-        $process = new Process(['node', '--version']);
+        $process = new Process(['node', $generatePdfScript, $html, $outputPath]);
         $process->run();
 
         if (!$process->isSuccessful()) {
             $errorOutput = $process->getErrorOutput();
-            $exitCode = $process->getExitCode();
-            // Log::error("PDF Generation Failed", [
-            //     'error' => $errorOutput,
-            //     'exit_code' => $exitCode,
-            //     'command' => $process->getCommandLine()
-            // ]);
-            // throw new \RuntimeException($errorOutput ?: "Error code: $exitCode");
-            dd([
-                'error' => $errorOutput,
-                'exit_code' => $exitCode,
-                'command' => $process->getCommandLine()
-            ]);
+            throw new \RuntimeException($errorOutput ?: 'An unknown error occurred while generating the PDF.');
         }
 
         return response()->download($outputPath, $pdf_file_name . '.pdf')->deleteFileAfterSend(true);
