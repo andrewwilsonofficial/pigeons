@@ -1,5 +1,9 @@
 import puppeteer from "puppeteer";
 
+import fs from 'fs';
+fs.writeFileSync('dummy.txt', 'Hello World!');
+console.log('Dummy file created!');
+
 async function generatePdf(html, outputFileName) {
     try {
         const browser = await puppeteer.launch({

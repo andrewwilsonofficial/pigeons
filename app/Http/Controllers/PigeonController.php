@@ -206,7 +206,7 @@ class PigeonController extends Controller
         $process->run();
 
         if (!$process->isSuccessful()) {
-            $errorOutput = $process->getOutput();
+            $errorOutput = $process->getErrorOutput();
             throw new \RuntimeException($errorOutput ?: 'An unknown error occurred while generating the PDF.');
         }
 
