@@ -179,6 +179,8 @@ Route::get('public-pigeon/{pigeon}', [PigeonController::class, 'publicPigeon'])-
 Route::get('/test', function () {
     $output = shell_exec('/www/server/nodejs/v20.10.0/bin/node -v 2>&1');
     echo $output;
+    $output= shell_exec('whoami');
+    echo $output;
 });
 
 require __DIR__ . '/auth.php';
