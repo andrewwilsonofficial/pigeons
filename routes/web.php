@@ -181,4 +181,17 @@ Route::get('/phpinfo', function () {
     return phpinfo();
 });
 
+Route::get('/test', function () {
+    $process = new Symfony\Component\Process\Process(['node', '--version']);
+    $process->run();
+
+    if (!$process->isSuccessful()) {
+        echo "Error: " . $process->getErrorOutput();
+    } else {
+        echo "Node.js version: " . $process->getOutput();
+    }
+
+    echo "\nEnvironment PATH: " . getenv('PATH');
+});
+
 require __DIR__ . '/auth.php';
