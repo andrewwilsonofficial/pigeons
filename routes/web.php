@@ -178,6 +178,7 @@ Route::get('public-pigeon/{pigeon}', [PigeonController::class, 'publicPigeon'])-
 
 Route::get('/test', function () {
     $generatePdfScript = base_path('nodejs/generate-pdf.js');
+    echo 'node '.$generatePdfScript.' "test" "test.pdf" 2>&1';
     $output = shell_exec('node '.$generatePdfScript.' "test" "test.pdf" 2>&1');
     echo "<pre>$output</pre>";
 });
