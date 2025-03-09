@@ -63,7 +63,7 @@ class PairController extends Controller
         $outputPath = storage_path('app/' . $pdf_file_name . '.pdf');
 
         $generatePdfScript = base_path('nodejs/generate-pdf.js');
-        $process = new Process(['node', $generatePdfScript, $html, $outputPath]);
+        $process = new Process(['sudo', 'node', $generatePdfScript, $html, $outputPath]);
         $process->run();
 
         if (!$process->isSuccessful()) {
