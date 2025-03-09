@@ -203,7 +203,7 @@ class PigeonController extends Controller
 
         $generatePdfScript = base_path('nodejs/generate-pdf.js');
         $process = new Process(['node', $generatePdfScript, $html, $outputPath]);
-        $process->run();An unknown error occurred while generating the PDF.
+        $process->run();
 
         if (!$process->isSuccessful()) {
             $errorOutput = $process->getErrorOutput();
