@@ -192,6 +192,14 @@ Route::get('/test', function () {
     }
 
     echo "\nEnvironment PATH: " . getenv('PATH');
+
+    // Inside your controller method
+    dd([
+        'PATH' => getenv('PATH'),
+        'Node Path' => shell_exec('which node'),
+        'Node Version' => shell_exec('node --version'),
+        'NPM Version' => shell_exec('npm --version')
+    ]);
 });
 
 require __DIR__ . '/auth.php';
