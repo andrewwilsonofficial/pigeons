@@ -199,6 +199,7 @@ class PigeonController extends Controller
     {
         $pdf_file_name = 'pigeon_pedigree_' . $pigeon->id . '.pdf';
         $html = View::make('components.pdf.pigeon-pedigree', ['pigeon' => $pigeon])->render();
+        $html = '<!DOCTYPE html><html><head><meta charset="utf-8"></head><body>this is a test</body></html>';
         $outputPath = storage_path('app/' . $pdf_file_name . '.pdf');
 
         $generatePdfScript = base_path('nodejs/generate-pdf.js');
