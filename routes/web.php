@@ -176,4 +176,9 @@ Route::middleware('auth')->group(function () {
 
 Route::get('public-pigeon/{pigeon}', [PigeonController::class, 'publicPigeon'])->name('pigeons.publicPigeon');
 
+// PHPinfo
+Route::get('/phpinfo', function () {
+    return phpinfo();
+});
+
 require __DIR__ . '/auth.php';
