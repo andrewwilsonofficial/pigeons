@@ -177,8 +177,8 @@ Route::middleware('auth')->group(function () {
 Route::get('public-pigeon/{pigeon}', [PigeonController::class, 'publicPigeon'])->name('pigeons.publicPigeon');
 
 Route::get('/test', function () {
-    // Run a test nodejs command
-    $output = shell_exec('/www/server/nodejs/v20.10.0/bin/node -v');
+    // Ensure the correct environment variables are set
+    $output = shell_exec('export PATH=$PATH:/www/server/nodejs/v20.10.0/bin && node -v');
     dd($output);
 });
 
