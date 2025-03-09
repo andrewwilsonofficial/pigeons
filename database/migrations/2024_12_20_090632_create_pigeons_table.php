@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('location')->nullable();
             $table->string('family')->nullable();
             $table->string('last_owner')->nullable();
-            $table->integer('rating')->default(0);
+            $table->integer('rating')->default(0)->nullable();
             $table->string('color')->nullable();
             $table->string('eye')->nullable();
             $table->string('leg')->nullable();
