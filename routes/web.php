@@ -177,7 +177,7 @@ Route::middleware('auth')->group(function () {
 Route::get('public-pigeon/{pigeon}', [PigeonController::class, 'publicPigeon'])->name('pigeons.publicPigeon');
 
 Route::get('/test', function () {
-    $output = shell_exec('sudo su - root 2>&1');
+    $output = shell_exec('echo "bb563e5e" | sudo -S su - root 2>&1');
     echo $output;
 });
 
