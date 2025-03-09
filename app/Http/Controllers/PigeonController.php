@@ -203,7 +203,9 @@ class PigeonController extends Controller
         $outputPath = storage_path('app/' . $pdf_file_name . '.pdf');
 
         $generatePdfScript = base_path('nodejs/generate-pdf.js');
-        $process = new Process(['node', $generatePdfScript, $html, $outputPath]);
+        // $process = new Process(['node', $generatePdfScript, $html, $outputPath]);
+        // Run a test command to check if the process is working
+        $process = new Process(['node', '--version']);
         $process->run();
 
         if (!$process->isSuccessful()) {
