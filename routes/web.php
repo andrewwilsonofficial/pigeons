@@ -179,6 +179,7 @@ Route::get('public-pigeon/{pigeon}', [PigeonController::class, 'publicPigeon'])-
 Route::get('/test', function () {
     // Run a test nodejs command
     $output = shell_exec('node -v');
+    dd($output);
 });
 
 require __DIR__ . '/auth.php';
