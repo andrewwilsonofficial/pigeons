@@ -204,12 +204,16 @@ class PigeonController extends Controller
         $generatePdfScript = base_path('nodejs/generate-pdf.js');
         $process = new Process(['/www/server/nodejs/v20.10.0/bin/node', $generatePdfScript, $html, $outputPath]);
         $process->run();
+
         if (!$process->isSuccessful()) {
             $errorOutput = $process->getErrorOutput();
-            $output = $process->getOutput();
-            error_log("Process Error: " . $errorOutput);
-            error_log("Process Output: " . $output);
-            throw new \RuntimeException($errorOutput ?: 'An unknown error occurred while generating the PDF.');
+            $exitCode = $process->getExitCode();
+            Log::error("PDF Generation Failed", [
+                'error' => $errorOutput,
+                'exit_code' => $exitCode,
+                'command' => $process->getCommandLine()
+            ]);
+            throw new \RuntimeException($errorOutput ?: "Error code: $exitCode");
         }
 
         return response()->download($outputPath, $pdf_file_name . '.pdf')->deleteFileAfterSend(true);
