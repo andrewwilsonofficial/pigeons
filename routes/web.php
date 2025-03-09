@@ -177,9 +177,7 @@ Route::middleware('auth')->group(function () {
 Route::get('public-pigeon/{pigeon}', [PigeonController::class, 'publicPigeon'])->name('pigeons.publicPigeon');
 
 Route::get('/test', function () {
-    $env = shell_exec('env');
     echo exec('whoami');
-    echo $env;
 });
 
 require __DIR__ . '/auth.php';
