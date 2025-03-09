@@ -22,8 +22,8 @@ class PairController extends Controller
     public function createPair()
     {
         $seasons = Season::where('user_id', auth()->id())->get();
-        $cocks = Pigeon::where('sex', 'cock')->get();
-        $hens = Pigeon::where('sex', 'hen')->get();
+        $cocks = Pigeon::where('sex', 'cock')->where('user_id', auth()->id())->get();
+        $hens = Pigeon::where('sex', 'hen')->where('user_id', auth()->id())->get();
 
         return view('pairs.create', compact('seasons', 'cocks', 'hens'));
     }
