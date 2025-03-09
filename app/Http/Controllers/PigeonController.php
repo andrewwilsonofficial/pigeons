@@ -208,12 +208,17 @@ class PigeonController extends Controller
         if (!$process->isSuccessful()) {
             $errorOutput = $process->getErrorOutput();
             $exitCode = $process->getExitCode();
-            Log::error("PDF Generation Failed", [
+            // Log::error("PDF Generation Failed", [
+            //     'error' => $errorOutput,
+            //     'exit_code' => $exitCode,
+            //     'command' => $process->getCommandLine()
+            // ]);
+            // throw new \RuntimeException($errorOutput ?: "Error code: $exitCode");
+            dd([
                 'error' => $errorOutput,
                 'exit_code' => $exitCode,
                 'command' => $process->getCommandLine()
             ]);
-            throw new \RuntimeException($errorOutput ?: "Error code: $exitCode");
         }
 
         return response()->download($outputPath, $pdf_file_name . '.pdf')->deleteFileAfterSend(true);
