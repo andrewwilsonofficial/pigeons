@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'User Ibrahim',
-            'email' => 'user@app.pigeonprofile.com',
+            'email' => 'andrewpoe2000@gmail.com',
             'password' => bcrypt('password'),
             'role' => 'user',
             'email_verified_at' => now(),
