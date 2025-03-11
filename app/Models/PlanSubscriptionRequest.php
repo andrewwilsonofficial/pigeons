@@ -27,7 +27,7 @@ class PlanSubscriptionRequest extends Model
         return $this->belongsTo(User::class)->withDefault([
             'name' => 'Unknown',
             'email' => 'Unknown',
-        ]);
+        ])->withTrashed();
     }
 
     public function plan()
