@@ -54,7 +54,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $subscription_request->plan->name }}</td>
-                                            {{-- <td>{{ $subscription_request->user->name }}</td> --}}
+                                            <td>{{ $subscription_request->user->name }}</td>
                                             <td>{{ \Carbon\Carbon::parse($subscription_request->start_date)->format('Y-m-d') }}
                                                 /
                                                 {{ \Carbon\Carbon::parse($subscription_request->end_date)->format('Y-m-d') }}
