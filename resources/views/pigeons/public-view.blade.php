@@ -86,9 +86,6 @@
                                             <strong>{{ __('Eye') }}:</strong> {{ $pigeon->eye }}
                                         </p>
                                         <p>
-                                            <strong>{{ __('Leg') }}:</strong> {{ $pigeon->leg }}
-                                        </p>
-                                        <p>
                                             <strong>{{ __('Markings') }}:</strong> {{ $pigeon->markings }}
                                         </p>
                                     </div>

@@ -53,8 +53,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="color_description">{{ __('Color Description') }}</label>
-                                        <input type="text" class="form-control" id="color_description" name="color_description" placeholder="{{ __('Enter color description') }}" value="{{ old('color_description', $pigeon->color_description) }}">
+                                        <label for="color">{{ __('Color') }}</label>
+                                        <input type="text" class="form-control" id="color" name="color" placeholder="{{ __('Enter color') }}" value="{{ old('color', $pigeon->color) }}">
                                     </div>
                                 </div>
                             </div>
@@ -89,22 +89,13 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="color">{{ __('Color') }}</label>
-                                        <input type="text" class="form-control" id="color" name="color" placeholder="{{ __('Enter color') }}" value="{{ old('color', $pigeon->color) }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
                                         <label for="eye">{{ __('Eye') }}</label>
-                                        <input type="text" class="form-control" id="eye" name="eye" placeholder="{{ __('Enter eye') }}" value="{{ old('eye', $pigeon->eye) }}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="leg">{{ __('Leg') }}</label>
-                                        <input type="text" class="form-control" id="leg" name="leg" placeholder="{{ __('Enter leg') }}" value="{{ old('leg', $pigeon->leg) }}">
+                                        <select class="form-control" id="eye" name="eye">
+                                            <option value="orange" {{ old('eye', $pigeon->eye) == 'orange' ? 'selected' : '' }}>{{ __('Orange') }}</option>
+                                            <option value="yellow" {{ old('eye', $pigeon->eye) == 'yellow' ? 'selected' : '' }}>{{ __('Yellow') }}</option>
+                                            <option value="pearl" {{ old('eye', $pigeon->eye) == 'pearl' ? 'selected' : '' }}>{{ __('Pearl') }}</option>
+                                            <option value="bull" {{ old('eye', $pigeon->eye) == 'bull' ? 'selected' : '' }}>{{ __('Bull') }}</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -118,7 +109,15 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="status">{{ __('Status') }}</label>
-                                        <input type="text" class="form-control" id="status" name="status" placeholder="{{ __('Enter status') }}" value="{{ old('status', $pigeon->status) }}">
+                                        <select class="form-control" id="status" name="status">
+                                            <option value="active" {{ old('status', $pigeon->status) == 'active' ? 'selected' : '' }}>{{ __('Active') }}</option>
+                                            <option value="breeder" {{ old('status', $pigeon->status) == 'breeder' ? 'selected' : '' }}>{{ __('Breeder') }}</option>
+                                            <option value="lost" {{ old('status', $pigeon->status) == 'lost' ? 'selected' : '' }}>{{ __('Lost') }}</option>
+                                            <option value="sold" {{ old('status', $pigeon->status) == 'sold' ? 'selected' : '' }}>{{ __('Sold') }}</option>
+                                            <option value="on_loan" {{ old('status', $pigeon->status) == 'on_loan' ? 'selected' : '' }}>{{ __('On Loan') }}</option>
+                                            <option value="widow" {{ old('status', $pigeon->status) == 'widow' ? 'selected' : '' }}>{{ __('Widow') }}</option>
+                                            <option value="dead" {{ old('status', $pigeon->status) == 'dead' ? 'selected' : '' }}>{{ __('Dead') }}</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

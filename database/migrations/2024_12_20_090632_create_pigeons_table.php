@@ -19,14 +19,12 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('band')->nullable();
             $table->string('second_band')->nullable();
-            $table->string('color_description')->nullable();
             $table->string('location')->nullable();
             $table->string('family')->nullable();
             $table->string('last_owner')->nullable();
             $table->integer('rating')->default(0)->nullable();
             $table->string('color')->nullable();
             $table->string('eye')->nullable();
-            $table->string('leg')->nullable();
             $table->string('markings')->nullable();
             $table->string('status')->nullable();
             $table->enum('sex', ['unknown', 'cock', 'hen'])->default('unknown');

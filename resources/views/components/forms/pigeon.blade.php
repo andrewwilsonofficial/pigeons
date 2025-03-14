@@ -31,9 +31,9 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label for="color_description">{{ __('Color Description') }}</label>
-                <input type="text" class="form-control" id="color_description" name="color_description"
-                    placeholder="{{ __('Enter color description') }}" value="{{ old('color_description') }}">
+                <label for="color">{{ __('Color') }}</label>
+                <input type="text" class="form-control" id="color" name="color"
+                    placeholder="{{ __('Enter color') }}" value="{{ old('color') }}">
             </div>
         </div>
     </div>
@@ -72,25 +72,14 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label for="color">{{ __('Color') }}</label>
-                <input type="text" class="form-control" id="color" name="color"
-                    placeholder="{{ __('Enter color') }}" value="{{ old('color') }}">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="eye">{{ __('Eye') }}</label>
-                <input type="text" class="form-control" id="eye" name="eye"
-                    placeholder="{{ __('Enter eye') }}" value="{{ old('eye') }}">
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="leg">{{ __('Leg') }}</label>
-                <input type="text" class="form-control" id="leg" name="leg"
-                    placeholder="{{ __('Enter leg') }}" value="{{ old('leg') }}">
+            <label for="eye">{{ __('Eye') }}</label>
+            <select class="form-control" id="eye" name="eye">
+                <option value="">{{ __('Select eye') }}</option>
+                <option value="Orange" {{ old('eye') == 'Orange' ? 'selected' : '' }}>{{ __('Orange') }}</option>
+                <option value="Yellow" {{ old('eye') == 'Yellow' ? 'selected' : '' }}>{{ __('Yellow') }}</option>
+                <option value="Pearl" {{ old('eye') == 'Pearl' ? 'selected' : '' }}>{{ __('Pearl') }}</option>
+                <option value="Bull" {{ old('eye') == 'Bull' ? 'selected' : '' }}>{{ __('Bull') }}</option>
+            </select>
             </div>
         </div>
         <div class="col-md-6">
@@ -105,8 +94,16 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="status">{{ __('Status') }}</label>
-                <input type="text" class="form-control" id="status" name="status"
-                    placeholder="{{ __('Enter status') }}" value="{{ old('status') }}">
+                <select class="form-control" id="status" name="status">
+                    <option value="">{{ __('Select status') }}</option>
+                    <option value="Active" {{ old('status') == 'Active' ? 'selected' : '' }}>{{ __('Active') }}</option>
+                    <option value="Breeder" {{ old('status') == 'Breeder' ? 'selected' : '' }}>{{ __('Breeder') }}</option>
+                    <option value="Lost" {{ old('status') == 'Lost' ? 'selected' : '' }}>{{ __('Lost') }}</option>
+                    <option value="Sold" {{ old('status') == 'Sold' ? 'selected' : '' }}>{{ __('Sold') }}</option>
+                    <option value="On Loan" {{ old('status') == 'On Loan' ? 'selected' : '' }}>{{ __('On Loan') }}</option>
+                    <option value="Widow" {{ old('status') == 'Widow' ? 'selected' : '' }}>{{ __('Widow') }}</option>
+                    <option value="Dead" {{ old('status') == 'Dead' ? 'selected' : '' }}>{{ __('Dead') }}</option>
+                </select>
             </div>
         </div>
         <div class="col-md-6">
