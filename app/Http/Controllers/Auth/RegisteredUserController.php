@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use ReCaptcha\ReCaptcha;
 
 class RegisteredUserController extends Controller
 {
@@ -31,9 +32,18 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+
+        $recaptcha = new ReCaptcha(config('services.recaptcha.secret_key'));
+        $response = $recaptcha->verify($request->input('recaptcha_token'), $request->ip());
+
+        if (!$response->isSuccess()) {
+            return back()
+                ->withErrors(['recaptcha' => 'ReCAPTCHA verification failed.'])
+                ->withInput();
+        }
 
         $user = User::create([
             'name' => $request->name,

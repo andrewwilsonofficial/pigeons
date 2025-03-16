@@ -33,6 +33,7 @@
 
                         <form method="POST" action="{{ route('register') }}" class="login100-form validate-form">
                             @csrf
+                            <input type="hidden" name="recaptcha_token" id="recaptcha_token">
                             <span class="login100-form-title pb-5">
                                 Register
                             </span>
@@ -122,7 +123,14 @@
 
     <!-- Switcher js -->
     <script src="{{ asset('assets/switcher/js/switcher.js') }}"></script>
-
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', {action: 'register'}).then(function(token) {
+                document.getElementById('recaptcha_token').value = token;
+            });
+        });
+    </script>
 </body>
 
 </html>
