@@ -153,6 +153,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/admin/{user}/edit', [AdminAdminController::class, 'editAdmin'])->name('admin.admins.edit');
             Route::put('/admin/{user}/edit', [AdminAdminController::class, 'updateAdmin'])->name('admin.admins.update');
             Route::delete('/admin/{admin}/delete', [AdminAdminController::class, 'destroyAdmin'])->name('admin.admins.destroy');
+
+            Route::get('/payment-methods', [AdminSubscriptionController::class, 'paymentMethods'])->name('admin.payment-methods');
+            Route::get('/payment-methods/edit/{paymentMethod}', [AdminSubscriptionController::class, 'editPaymentMethod'])->name('admin.payment-methods.edit');
+            Route::put('/payment-methods/edit/{paymentMethod}', [AdminSubscriptionController::class, 'updatePaymentMethod'])->name('admin.payment-methods.update');
         });
     });
 

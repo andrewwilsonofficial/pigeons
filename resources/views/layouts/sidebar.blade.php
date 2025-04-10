@@ -280,11 +280,11 @@
                         </a>
                     </li>
                     <li class="slide">
-                        <a class="side-menu__item has-link {{ request()->routeIs('admin.plans') ? 'active' : '' }}"
-                            data-bs-toggle="slide" href="{{ route('admin.plans') }}">
+                        <a class="side-menu__item has-link {{ request()->routeIs('admin.payment-methods') ? 'active' : '' }}"
+                            data-bs-toggle="slide" href="{{ route('admin.payment-methods') }}">
                             <i class="side-menu__icon fe fe-credit-card"></i>
                             <span class="side-menu__label">
-                                {{ __('Plans') }}
+                                {{ __('Payment methods') }}
                             </span>
                         </a>
                     </li>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PaymentMethod;
 use App\Models\Plan;
 use App\Models\PlanSubscriptionRequest;
 use App\Models\SubscriptionLog;
@@ -89,5 +90,32 @@ class AdminSubscriptionController extends Controller
         ]);
 
         return redirect()->route('admin.subscriptions')->with('success', __('Subscription request rejected successfully'));
+    }
+
+    public function paymentMethods()
+    {
+        $payment_methods = PaymentMethod::all();
+
+        return view('admin.payment_methods.index', compact('payment_methods'));
+    }
+
+    public function editPaymentMethod(PaymentMethod $paymentMethod)
+    {
+        return view('admin.payment_methods.edit', compact('paymentMethod'));
+    }
+
+    public function updatePaymentMethod(Request $request, PaymentMethod $paymentMethod)
+    {
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required'
+        ]);
+
+        $paymentMethod->update([
+            'name' => $request->name,
+            'description' => $request->description
+        ]);
+
+        return redirect()->route('admin.payment-methods')->with('success', __('Payment method updated successfully'));
     }
 }
