@@ -97,6 +97,7 @@ class PigeonController extends Controller
 
         try {
             $file = $validatedData['files'];
+            dd($file);
             $file_uplaod = $file->store('attachments', 'main');
 
             $attachment = PigeonAttachment::create([
