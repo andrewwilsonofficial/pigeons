@@ -102,7 +102,7 @@ class PigeonController extends Controller
 
             $attachment = PigeonAttachment::create([
                 'pigeon_id' => $pigeon->id,
-                'filename' => str_replace('attachments/', '', $file_uplaod),
+                'filename' => str_replace('attachments/', '', $file_upload),
             ]);
 
             return json_encode(['success' => true, 'element' => view('components.pigeons.attachment', ['attachment' => $attachment])->render()]);
