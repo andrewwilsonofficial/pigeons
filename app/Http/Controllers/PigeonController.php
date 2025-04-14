@@ -96,11 +96,9 @@ class PigeonController extends Controller
         ]);
 
         try {
-            $file = $validatedData['files'];
-            $file_uplaod = $file->store('attachments', 'main');
-            if (!$file_uplaod) {
-                throw new \Exception('File upload failed.'.$file->getError());
-            }
+            $file = $request->file('files');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file_upload = $file->storeAs('attachments', $filename, 'public');
 
             $attachment = PigeonAttachment::create([
                 'pigeon_id' => $pigeon->id,
