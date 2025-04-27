@@ -64,7 +64,9 @@
         .pigeon-rectangle {
             width: 210px;
             height: 692px;
-            border: 1px solid gray;
+            border: 2px solid #000;
+            background: #fff;
+            box-shadow: 5px 5px 0px #333;
             position: absolute;
             top: 180px;
             left: 8mm;
@@ -73,7 +75,9 @@
         .father-rectangle {
             width: 160px;
             height: 250px;
-            border: 1px solid gray;
+            border: 2px solid #000;
+            background: #fff;
+            box-shadow: 5px 5px 0px #333;
             position: absolute;
             top: 180px;
             left: calc(8mm + 195px + 35px);
@@ -82,7 +86,9 @@
         .mother-rectangle {
             width: 160px;
             height: 250px;
-            border: 1px solid gray;
+            border: 2px solid #000;
+            background: #fff;
+            box-shadow: 5px 5px 0px #333;
             position: absolute;
             top: calc(180px + 250px + 35px);
             left: calc(8mm + 195px + 35px);
@@ -91,7 +97,9 @@
         .father-father-rectangle {
             width: 140px;
             height: 110px;
-            border: 1px solid gray;
+            border: 2px solid #000;
+            background: #fff;
+            box-shadow: 5px 5px 0px #333;
             position: absolute;
             top: 180px;
             left: calc(8mm + 195px + 35px + 150px + 28px);
@@ -100,7 +108,9 @@
         .father-mother-rectangle {
             width: 140px;
             height: 110px;
-            border: 1px solid gray;
+            border: 2px solid #000;
+            background: #fff;
+            box-shadow: 5px 5px 0px #333;
             position: absolute;
             top: calc(180px + 120px + 20px);
             left: calc(8mm + 195px + 35px + 150px + 28px);
@@ -109,7 +119,9 @@
         .father-mother-father-rectangle {
             width: 120px;
             height: 40px;
-            border: 1px solid gray;
+            border: 2px solid #000;
+            background: #fff;
+            box-shadow: 5px 5px 0px #333;
             position: absolute;
             top: calc(180px + 120px + 20px);
             left: calc(8mm + 195px + 35px + 150px + 40px + 90px + 53px);
@@ -118,7 +130,9 @@
         .father-mother-mother-rectangle {
             width: 120px;
             height: 40px;
-            border: 1px solid gray;
+            border: 2px solid #000;
+            background: #fff;
+            box-shadow: 5px 5px 0px #333;
             position: absolute;
             top: calc(180px + 120px + 20px + 60px + 10px);
             left: calc(8mm + 195px + 35px + 150px + 40px + 90px + 53px);
@@ -127,7 +141,9 @@
         .father-father-father-rectangle {
             width: 120px;
             height: 40px;
-            border: 1px solid gray;
+            border: 2px solid #000;
+            background: #fff;
+            box-shadow: 5px 5px 0px #333;
             position: absolute;
             top: 180px;
             left: calc(8mm + 195px + 35px + 150px + 40px + 90px + 53px);
@@ -136,7 +152,9 @@
         .father-father-mother-rectangle {
             width: 120px;
             height: 40px;
-            border: 1px solid gray;
+            border: 2px solid #000;
+            background: #fff;
+            box-shadow: 5px 5px 0px #333;
             position: absolute;
             top: calc(180px + 60px + 10px);
             left: calc(8mm + 195px + 35px + 150px + 40px + 90px + 53px);
@@ -145,7 +163,9 @@
         .mother-father-rectangle {
             width: 140px;
             height: 110px;
-            border: 1px solid gray;
+            border: 2px solid #000;
+            background: #fff;
+            box-shadow: 5px 5px 0px #333;
             position: absolute;
             top: calc(180px + 250px + 35px);
             left: calc(8mm + 195px + 35px + 150px + 28px);
@@ -154,7 +174,9 @@
         .mother-mother-rectangle {
             width: 140px;
             height: 110px;
-            border: 1px solid gray;
+            border: 2px solid #000;
+            background: #fff;
+            box-shadow: 5px 5px 0px #333;
             position: absolute;
             top: calc(180px + 250px + 35px + 120px + 20px);
             left: calc(8mm + 195px + 35px + 150px + 28px);
@@ -163,7 +185,9 @@
         .mother-mother-father-rectangle {
             width: 120px;
             height: 40px;
-            border: 1px solid gray;
+            border: 2px solid #000;
+            background: #fff;
+            box-shadow: 5px 5px 0px #333;
             position: absolute;
             top: calc(180px + 250px + 35px + 120px + 20px);
             left: calc(8mm + 195px + 35px + 150px + 40px + 90px + 53px);
@@ -172,7 +196,9 @@
         .mother-mother-mother-rectangle {
             width: 120px;
             height: 40px;
-            border: 1px solid gray;
+            border: 2px solid #000;
+            background: #fff;
+            box-shadow: 5px 5px 0px #333;
             position: absolute;
             top: calc(180px + 250px + 35px + 120px + 20px + 60px + 10px);
             left: calc(8mm + 195px + 35px + 150px + 40px + 90px + 53px);
@@ -181,7 +207,9 @@
         .mother-father-father-rectangle {
             width: 120px;
             height: 40px;
-            border: 1px solid gray;
+            border: 2px solid #000;
+            background: #fff;
+            box-shadow: 5px 5px 0px #333;
             position: absolute;
             top: calc(180px + 250px + 35px);
             left: calc(8mm + 195px + 35px + 150px + 40px + 90px + 53px);
@@ -190,7 +218,9 @@
         .mother-father-mother-rectangle {
             width: 120px;
             height: 40px;
-            border: 1px solid gray;
+            border: 2px solid #000;
+            background: #fff;
+            box-shadow: 5px 5px 0px #333;
             position: absolute;
             top: calc(180px + 250px + 35px + 60px + 10px);
             left: calc(8mm + 195px + 35px + 150px + 40px + 90px + 53px);
